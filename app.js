@@ -17,6 +17,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+app.get("/", (req, res) => {
+  res.send("iGive api homepage");
+});
+
 app.use("/users", usersRouter);
 
 app.use(function (req, res, next) {

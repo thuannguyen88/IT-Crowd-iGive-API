@@ -7,8 +7,11 @@
     "start": "node ./bin/www.js",
     "db:deploy": "node ./db/scripts/users/createTable.js && node ./db/scripts/users/populateTable.js",
     "createusers": "node -r dotenv/config ./db/scripts/users/createUsersTable.js",
-    "populateuserstable": "node -r dotenv/config ./db/scripts/users/populateUsersTable.js",
     "createitems": "node -r dotenv/config ./db/scripts/users/createItemsTable.js",
+    "populateuserstable": "node -r dotenv/config ./db/scripts/users/populateUsersTable.js",
+    "populateitemstable": "node -r dotenv/config ./db/scripts/users/populateItemsTable.js",
+    "dropitems": "node -r dotenv/config ./db/scripts/users/dropItemsTable.js",
+    "dropusers": "node -r dotenv/config ./db/scripts/users/dropUsersTable.js",
     "dev": "nodemon -r dotenv/config ./bin/www.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
