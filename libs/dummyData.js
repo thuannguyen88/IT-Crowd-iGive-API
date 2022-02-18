@@ -1,4 +1,4 @@
-const users = [
+export const users = [
   {
     id: 1,
     firstName: "Jane",
@@ -28,5 +28,36 @@ const users = [
     isActive: true,
     profilePicture: "",
     userBio: "hello I'm Dennis, i like drink",
+  },
+];
+
+export const items = [
+  {
+    itemId: 1,
+    userId: 1,
+    category: ["fruit", "vegetable"],
+    itemName: "apple",
+    itemDescription: "i have 5 red apples to give",
+    useByDate: 21 / 2 / 22,
+    dateAdded: 18 / 2 / 22,
+    quantity: 5,
+    itemImage: "",
+    isReserved: false,
+    availablity: true,
+    timeslot: ["9am-10am", "11am-12pm", "1pm-2pm"],
+  },
+  {
+    itemId: 2,
+    userId: 1,
+    category: ["fruit", "vegetable"],
+    itemName: "carrot",
+    itemDescription: "i have 10kg of carrots to give",
+    useByDate: 25 / 2 / 22,
+    dateAdded: 18 / 2 / 22,
+    quantity: 1,
+    itemImage: "",
+    isReserved: true,
+    availablity: false,
+    timeslot: ["9am-10am", "11am-12pm", "1pm-2pm"],
   },
 ];
