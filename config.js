@@ -1,8 +1,8 @@
 // this environment variable gets handed to us by heroku if we use the postgres add-on
 export const db = {
-  dbport: process.env.PORT,
-  dbhost: process.env.HOST,
-  username: process.env.USER,
-  password: process.env.PASSWORD,
-  dbname: process.env.DATABASE,
+  port: process.env.PG_PORT,
+  host: process.env.PG_HOST,
+  user: process.env.PG_USER,
+  password: process.env.PG_PASSWORD,
+  database: process.env.PG_DATABASE,
 };
