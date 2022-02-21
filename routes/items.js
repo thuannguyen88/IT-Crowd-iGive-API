@@ -131,4 +131,19 @@ router.put("/:id", async (req, res) => {
   //   });
 });
 
+router.patch("/:id", async (req, res) => {
+  res.send("item reserve status updated successfully");
+
+  //   const id = Number(req.params.id);
+  //   const { isReserved } = req.body;
+
+  //   const itemReserveStatus = await updateIsReservedStatus(id, isReserved);
+
+  //   res.json({
+  //     message: `item reserve status updated successfully`,
+  //     success: true,
+  //     payload: itemReserveStatus,
+  //   });
+});
+
 export default router;
