@@ -3,32 +3,32 @@ import { items } from "../../../libs/dummyData.js";
 
 async function populateItemsTable() {
   for (let i = 0; i < items.length; i++) {
-    const userId = items[i].userId;
+    const user_id = items[i].user_id;
     const category = items[i].category;
-    const itemName = items[i].itemName;
-    const itemDescription = items[i].itemDescription;
-    const useByDate = items[i].useByDate;
-    const dateAdded = items[i].dateAdded;
+    const item_name = items[i].item_name;
+    const item_description = items[i].item_description;
+    const use_by_date = items[i].use_by_date;
+    const date_added = items[i].date_added;
     const quantity = items[i].quantity;
     const cloudinary_id = items[i].cloudinary_id;
-    const isReserved = items[i].isReserved;
+    const is_reserved = items[i].is_reserved;
     const availability = items[i].availability;
-    const timeslot = items[i].timeslot;
+    const time_slot = items[i].time_slot;
 
     const res = await query(
-      `INSERT INTO items ( userId, category, itemName, itemDescription, useByDate, dateAdded, quantity, cloudinary_id, isReserved, availability, timeslot ) VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11 ) RETURNING *`,
+      `INSERT INTO items ( user_id, category, item_name, item_description, use_by_date, date_added, quantity, cloudinary_id, is_reserved, availability, time_slot ) VALUES( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *`,
       [
-        userId,
+        user_id,
         category,
-        itemName,
-        itemDescription,
-        useByDate,
-        dateAdded,
+        item_name,
+        item_description,
+        use_by_date,
+        date_added,
         quantity,
         cloudinary_id,
-        isReserved,
+        is_reserved,
         availability,
-        timeslot,
+        time_slot,
       ]
     );
     console.log(res);

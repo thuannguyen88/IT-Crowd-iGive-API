@@ -62,23 +62,23 @@ usersRouter.get("/:id", async (req, res) => {
 usersRouter.post("/", async (req, res) => {
   // res.send("create new user");
   const {
-    firstName,
-    lastName,
+    first_name,
+    last_name,
     email,
     address,
-    isActive,
+    is_active,
     cloudinary_id,
-    userBio,
+    user_bio
   } = req.body;
 
   const newUser = await createUser(
-    firstName,
-    lastName,
+    first_name,
+    last_name,
     email,
     address,
-    isActive,
+    is_active,
     cloudinary_id,
-    userBio
+    user_bio
   );
 
   res.json({
@@ -108,24 +108,24 @@ usersRouter.put("/:id", async (req, res) => {
 
   const id = Number(req.params.id);
   const {
-    firstName,
-    lastName,
+    first_name,
+    last_name,
     email,
     address,
-    isActive,
+    is_active,
     cloudinary_id,
-    userBio,
+    user_bio
   } = req.body;
 
   const updatedUser = await updateUser(
     id,
-    firstName,
-    lastName,
+    first_name,
+    last_name,
     email,
     address,
-    isActive,
+    is_active,
     cloudinary_id,
-    userBio
+    user_bio
   );
 
   res.json({
@@ -139,9 +139,9 @@ usersRouter.patch("/:id", async (req, res) => {
   //   res.send("item reserve status updated successfully");
 
   const id = Number(req.params.id);
-  const { isActive } = req.body;
+  const { is_active } = req.body;
 
-  const userActiveStatus = await updateIsActiveStatus(id, isActive);
+  const userActiveStatus = await updateIsActiveStatus(id, is_active);
 
   res.json({
     message: `user active status updated successfully`,

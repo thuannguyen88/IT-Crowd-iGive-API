@@ -3,23 +3,23 @@ import { users } from "../../../libs/dummyData.js";
 
 async function populateUserTable() {
   for (let i = 0; i < users.length; i++) {
-    const firstName = users[i].firstName;
-    const lastName = users[i].lastName;
+    const first_name = users[i].first_name;
+    const last_name = users[i].last_name;
     const email = users[i].email;
     const address = users[i].address;
-    const isActive = users[i].isActive;
+    const is_active = users[i].is_active;
     const cloudinary_id = users[i].cloudinary_id;
-    const userBio = users[i].userBio;
+    const user_bio = users[i].user_bio;
     const res = await query(
-      `INSERT INTO users( firstName, lastName, email, address, isActive, cloudinary_id, userBio) VALUES( $1, $2, $3, $4, $5, $6, $7 ) RETURNING *`,
+      `INSERT INTO users( first_name, last_name, email, address, is_active, cloudinary_id, user_bio) VALUES( $1, $2, $3, $4, $5, $6, $7 ) RETURNING *`,
       [
-        firstName,
-        lastName,
+        first_name,
+        last_name,
         email,
         address,
-        isActive,
+        is_active,
         cloudinary_id,
-        userBio
+        user_bio
       ]
     );
     console.log(res);
