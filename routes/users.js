@@ -8,7 +8,7 @@ import {
   updateIsActiveStatus,
 } from "../models/users.js";
 
-const router = express.Router();
+const usersRouter = express.Router();
 
 // GET request to /users -> get all users
 // GET request /users/:id -> get specific user
@@ -17,7 +17,7 @@ const router = express.Router();
 // DELETE request /users/:id -> delete user
 
 /* GET all users */
-router.get("/", async (req, res) => {
+usersRouter.get("/", async (req, res) => {
   // res.send("get all users");
 
   const users = await getAllUsers();
@@ -30,7 +30,7 @@ router.get("/", async (req, res) => {
 });
 
 /* GET specific user by ID */
-router.get("/:id", async (req, res) => {
+usersRouter.get("/:id", async (req, res) => {
   // res.send("get user by id");
 
   const id = Number(req.params.id);
@@ -59,7 +59,7 @@ router.get("/:id", async (req, res) => {
 // });
 
 /* CREATE new user */
-router.post("/", async (req, res) => {
+usersRouter.post("/", async (req, res) => {
   // res.send("create new user");
   const {
     firstName,
@@ -89,7 +89,7 @@ router.post("/", async (req, res) => {
 });
 
 /* DELETE specific user */
-router.delete("/:id", async (req, res) => {
+usersRouter.delete("/:id", async (req, res) => {
   // res.send("user deleted");
 
   const id = Number(req.params.id);
@@ -103,7 +103,7 @@ router.delete("/:id", async (req, res) => {
 });
 
 /* UPDATE specific user */
-router.put("/:id", async (req, res) => {
+usersRouter.put("/:id", async (req, res) => {
   // res.send("user details updated successfully");
 
   const paramsId = Number(req.params.id);
@@ -137,7 +137,7 @@ router.put("/:id", async (req, res) => {
   });
 });
 
-router.patch("/:id", async (req, res) => {
+usersRouter.patch("/:id", async (req, res) => {
   //   res.send("item reserve status updated successfully");
 
   const id = Number(req.params.id);
@@ -152,4 +152,4 @@ router.patch("/:id", async (req, res) => {
   });
 });
 
-export default router;
+export default usersRouter;

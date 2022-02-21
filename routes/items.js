@@ -8,7 +8,7 @@ import {
   updateIsReservedStatus,
 } from "../models/users.js";
 
-const router = express.Router();
+const itemsRouter = express.Router();
 
 // GET request /items -> get all items
 // GET request /items/:id -> get all items for specific user
@@ -17,8 +17,8 @@ const router = express.Router();
 // DELETE request /items/:id -> delete item
 
 /* GET all items */
-router.get("/", async (req, res) => {
-//   res.send("get all items");
+itemsRouter.get("/", async (req, res) => {
+  //   res.send("get all items");
 
   const items = await getAllItems();
 
@@ -30,8 +30,8 @@ router.get("/", async (req, res) => {
 });
 
 /* GET specific item */
-router.get("/:id", async (req, res) => {
-//   res.send("get all items for specific user");
+itemsRouter.get("/:id", async (req, res) => {
+  //   res.send("get all items for specific user");
 
   const id = Number(req.params.id);
   const requestedItems = await getAllItemsParticularUser(id);
@@ -44,8 +44,8 @@ router.get("/:id", async (req, res) => {
 });
 
 /* CREATE an item */
-router.post("/", async (req, res) => {
-//   res.send("item created successfully");
+itemsRouter.post("/", async (req, res) => {
+  //   res.send("item created successfully");
 
   const {
     userId,
@@ -83,8 +83,8 @@ router.post("/", async (req, res) => {
 });
 
 /* DELETE specific item */
-router.delete("/:id", async (req, res) => {
-//   res.send("item deleted successfully");
+itemsRouter.delete("/:id", async (req, res) => {
+  //   res.send("item deleted successfully");
 
   const id = Number(req.params.id);
   const deletedItem = await deleteAGiveAwayItem(id);
@@ -97,8 +97,8 @@ router.delete("/:id", async (req, res) => {
 });
 
 /* UPDATE specific item */
-router.put("/:id", async (req, res) => {
-//   res.send("item details updated successfully");
+itemsRouter.put("/:id", async (req, res) => {
+  //   res.send("item details updated successfully");
 
   const paramsId = Number(req.params.id);
   const {
@@ -139,8 +139,8 @@ router.put("/:id", async (req, res) => {
   });
 });
 
-router.patch("/:id", async (req, res) => {
-//   res.send("item reserve status updated successfully");
+itemsRouter.patch("/:id", async (req, res) => {
+  //   res.send("item reserve status updated successfully");
 
   const id = Number(req.params.id);
   const { isReserved } = req.body;
@@ -154,4 +154,4 @@ router.patch("/:id", async (req, res) => {
   });
 });
 
-export default router;
+export default itemsRouter;
