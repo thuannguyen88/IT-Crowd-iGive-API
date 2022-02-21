@@ -3,8 +3,11 @@ import express from "express";
 
 const router = express.Router();
 
-// /users -> get all users
-// /users/:id -> get specific user
+// GET request to /users -> get all users
+// GET request /users/:id -> get specific user
+// POST request /users -> create new user
+// PUT request /users/:id -> update user
+// DELETE request /users/:id -> delete user
 
 /* GET all users */
 router.get("/", async (req, res) => {
@@ -31,8 +34,81 @@ router.get("/:id", async (req, res) => {
   // });
 });
 
+/* CREATE new user */
+router.post("/", async (req, res) => {
+  res.send("create new user");
+  // const {
+  //   firstName,
+  //   lastName,
+  //   email,
+  //   address,
+  //   isActive,
+  //   cloudinary_id,
+  //   userBio,
+  // } = req.body;
 
+  // const newUser = await createUser(
+  //   firstName,
+  //   lastName,
+  //   email,
+  //   address,
+  //   isActive,
+  //   cloudinary_id,
+  //   userBio
+  // );
 
+  // res.json({
+  //   message: `user created successfully`,
+  //   success: true,
+  //   payload: newUser,
+  // });
+});
 
+/* DELETE specific user */
+router.delete("/:id", async (req, res) => {
+  res.send("user deleted");
+  // const id = Number(req.params.id);
+  // const deletedUser = await deleteUser(id);
+
+  // res.json({
+  //   message: `user successfully deleted`,
+  //   success: true,
+  //   payload: deletedUser,
+  // });
+});
+
+/* UPDATE specific user */
+router.put("/:id", async (req, res) => {
+  res.send("user details updated successfully");
+  // const paramsId = Number(req.params.id);
+  // const {
+  //   id,
+  //   firstName,
+  //   lastName,
+  //   email,
+  //   address,
+  //   isActive,
+  //   cloudinary_id,
+  //   userBio,
+  // } = req.body;
+
+  // const updatedUser = await updateUser(
+  //   paramsId,
+  //   id,
+  //   firstName,
+  //   lastName,
+  //   email,
+  //   address,
+  //   isActive,
+  //   cloudinary_id,
+  //   userBio
+  // );
+
+  // res.json({
+  //   message: `user details updated successfully`,
+  //   success: true,
+  //   payload: updatedUser,
+  // });
+});
 
 export default router;
