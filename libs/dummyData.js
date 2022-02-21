@@ -1,6 +1,5 @@
 export const users = [
   {
-    id: 1,
     firstName: "Jane",
     lastName: "Wilkins",
     email: "jane.wilkins@gmail.com",
@@ -15,7 +14,6 @@ export const users = [
     userBio: "hello I'm Jane, i like food",
   },
   {
-    id: 2,
     firstName: "Dennis",
     lastName: "Thompson",
     email: "dennis.thompson@gmail.com",
@@ -33,7 +31,6 @@ export const users = [
 
 export const items = [
   {
-    itemId: 1,
     userId: 1,
     category: "fruit",
     itemName: "apple",
@@ -47,7 +44,6 @@ export const items = [
     timeslot: "between 5pm-7pm",
   },
   {
-    itemId: 2,
     userId: 1,
     category: "vegetable",
     itemName: "carrot",

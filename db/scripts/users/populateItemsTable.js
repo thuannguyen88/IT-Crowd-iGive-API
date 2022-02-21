@@ -16,7 +16,7 @@ async function populateItemsTable() {
     const timeslot = items[i].timeslot;
 
     const res = await query(
-      `INSERT INTO items (userId, category, itemName, itemDescription, useByDate, dateAdded, quantity, cloudinary_id, isReserved, availability, timeslot) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *`,
+      `INSERT INTO items ( userId, category, itemName, itemDescription, useByDate, dateAdded, quantity, cloudinary_id, isReserved, availability, timeslot ) VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11 ) RETURNING *`,
       [
         userId,
         category,
