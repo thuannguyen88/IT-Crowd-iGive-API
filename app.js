@@ -22,8 +22,8 @@ app.get("/", (req, res, next) => {
   res.render("iGive api homepage", { title: "Books" });
 });
 
-app.use("/users", usersRouter);
-// app.use("/items", itemsRouter);
+app.use("/api/users", usersRouter);
+app.use("/api/items", itemsRouter);
 
 app.use(function (req, res, next) {
   res
