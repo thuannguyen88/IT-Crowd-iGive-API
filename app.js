@@ -7,6 +7,7 @@ import cors from "cors";
 import logger from "morgan";
 
 import usersRouter from "./routes/users.js";
+import itemsRouter from "./routes/items.js";
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/users", usersRouter);
+app.use("/items", itemsRouter);
 
 app.use(function (req, res, next) {
   res
