@@ -21,7 +21,7 @@ router.get("/", async (req, res) => {
   // });
 });
 
-/* GET specific user */
+/* GET specific user by ID */
 router.get("/:id", async (req, res) => {
   res.send("get user by id");
   // const id = Number(req.params.id);
@@ -33,6 +33,22 @@ router.get("/:id", async (req, res) => {
   //   payload: requestedUser,
   // });
 });
+
+// /* GET specific user by EMAIL */
+// getting user by email, *unfinished logic*
+// router.get("/auth/:email", async (req, res) => {
+//   res.send("get user by email");
+
+ 
+  // const email = req.params.email;
+  // const requestedUser = await getUserByEmail(email);
+
+  // res.json({
+  //   message: `found user with email ${email}`,
+  //   success: true,
+  //   payload: requestedUser,
+  // });
+// });
 
 /* CREATE new user */
 router.post("/", async (req, res) => {

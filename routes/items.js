@@ -4,7 +4,7 @@ import express from "express";
 const router = express.Router();
 
 // GET request /items -> get all items
-// GET request /items/:id -> get specific item
+// GET request /items/:id -> get all items for specific user
 // POST request /items -> create an item
 // PUT request /items/:id -> update an item
 // DELETE request /items/:id -> delete item
@@ -24,15 +24,15 @@ router.get("/", async (req, res) => {
 
 /* GET specific item */
 router.get("/:id", async (req, res) => {
-  res.send("get specific item");
+  res.send("get all items for specific user");
 
   // const id = Number(req.params.id);
-  // const requestedItem = await getItemById(id);
+  // const requestedItems = await getAllItemsParticularUser(id);
 
   // res.json({
-  //   message: `found item with id ${id}`,
+  //   message: `found all items for user with id ${id}`,
   //   success: true,
-  //   payload: requestedItem,
+  //   payload: requestedItems,
   // });
 });
 
@@ -92,44 +92,58 @@ router.delete("/:id", async (req, res) => {
 /* UPDATE specific item */
 router.put("/:id", async (req, res) => {
   res.send("item details updated successfully");
-  const paramsId = Number(req.params.id);
-  const {
-    paramsId,
-    itemId,
-    userId,
-    category,
-    itemName,
-    itemDescription,
-    useByDate,
-    dateAdded,
-    quantity,
-    cloudinary_id,
-    isReserved,
-    availability,
-    timeslot,
-  } = req.body;
+  //   const paramsId = Number(req.params.id);
+  //   const {
+  //     itemId,
+  //     userId,
+  //     category,
+  //     itemName,
+  //     itemDescription,
+  //     useByDate,
+  //     dateAdded,
+  //     quantity,
+  //     cloudinary_id,
+  //     isReserved,
+  //     availability,
+  //     timeslot,
+  //   } = req.body;
 
-  const updatedItem = await updateAGiveAwayItem(
-    paramsId,
-    itemId,
-    userId,
-    category,
-    itemName,
-    itemDescription,
-    useByDate,
-    dateAdded,
-    quantity,
-    cloudinary_id,
-    isReserved,
-    availability,
-    timeslot
-  );
+  //   const updatedItem = await updateAGiveAwayItem(
+  //     paramsId,
+  //     itemId,
+  //     userId,
+  //     category,
+  //     itemName,
+  //     itemDescription,
+  //     useByDate,
+  //     dateAdded,
+  //     quantity,
+  //     cloudinary_id,
+  //     isReserved,
+  //     availability,
+  //     timeslot
+  //   );
 
-  res.json({
-    message: `item details updated successfully`,
-    success: true,
-    payload: updatedItem,
-  });
+  //   res.json({
+  //     message: `item details updated successfully`,
+  //     success: true,
+  //     payload: updatedItem,
+  //   });
+});
+
+router.patch("/:id", async (req, res) => {
+  res.send("item reserve status updated successfully");
+
+  //   const id = Number(req.params.id);
+  //   const { isReserved } = req.body;
+
+  //   const itemReserveStatus = await updateIsReservedStatus(id, isReserved);
+
+  //   res.json({
+  //     message: `item reserve status updated successfully`,
+  //     success: true,
+  //     payload: itemReserveStatus,
+  //   });
 });
 
 export default router;

@@ -2,25 +2,25 @@ import query from "../db/connection.js";
 
 // -=-=-=-=-=-=-=-=-=-=-=-=- USERS MODELS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-// fetch all USERS from a user table
+// fetch all USERS from an users table
 export async function getAllUsers() {
 	const data = await query(`SELECT * FROM users;`);
 	return data.rows;
 }
 
-// fetch the USER by ID from a user table 
+// fetch the USER by ID from an users table 
 export async function getUserById( id ) {
 	const data = await query(`SELECT * FROM users WHERE id=$1;`, [ id ]);
 	return data.rows;
 }
 
-// fetch the USER by EMAIL from a user table 
-export async function getUserByEmail( email ) {
-	const data = await query(`SELECT * FROM users WHERE email=$1;`, [ email ]);
-	return data.rows;
-}
+// fetch the USER by EMAIL from an users table ***
+// export async function getUserByEmail( email ) {
+// 	const data = await query(`SELECT * FROM users WHERE email=$1;`, [ email ]);
+// 	return data.rows;
+// }
 
-// create a new USER registration in a user table
+// create a new USER registration in an users table
 export async function createUser(
     firstName, 
     lastName, 
@@ -35,7 +35,7 @@ export async function createUser(
 	return data.rows;
 }
 
-// 
+// update an existing USER registration parameters in an users table
 export async function updateUser(
     id,
     firstName, 
@@ -51,27 +51,42 @@ export async function updateUser(
 	return data.rows;
 }
 
-// 
+// delete an existing USER registration in an users table
 export async function deleteUser( id ) {
 	const data = await query(`DELETE FROM users WHERE id=$1;`, [ id ]);
 	return data.rows;
 }
 
+// update an isActive parameter with an existing USER registration in an users table
+export async function updateIsActiveStatus( id, isActive ) {
+	// const selectedUser = await getUserById(id);
+	// const currentStatus = selectedUser[0].isActive;
+	// const isComplete = changeIsCompleteStatus(currentStatus);
+	const data = await query(
+		`UPDATE users 
+		SET isActive = $2 
+		WHERE id = $1
+		RETURNING *;`,
+		[ id, isActive ]
+	);
+	return data.rows;
+}
+
 // -=-=-=-=-=-=-=-=-=-=-=-=- ITEMS MODELS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-//
+//fetch all ITEMS from a items table
 export async function getAllItems() {
 	const data = await query(`SELECT * FROM items;`);
 	return data.rows;
 }
 
-// 
+// fetch all ITEMS from a particular USER from an user table
 export async function getAllItemsParticularUser( id ) {
 	const data = await query(`SELECT * FROM items WHERE userId=$1;`, [ id ]);
 	return data.rows;
 }
 
-// 
+// create a new ITEM registration in an items table
 export async function createAGiveAwayItem(
     userId,
     category,
@@ -90,7 +105,7 @@ export async function createAGiveAwayItem(
 	return data.rows;
 }
 
-// 
+// update an existing ITEM registration parameters in an items table
 export async function updateAGiveAwayItem(
     itemId,
     userId,
@@ -110,8 +125,17 @@ export async function updateAGiveAwayItem(
 	return data.rows;
 }
 
-// 
+// delete an existing ITEM registration in an items table
 export async function deleteAGiveAwayItem( id ) {
 	const data = await query(`DELETE FROM items WHERE itemId=$1;`, [ id ]);
+	return data.rows;
+}
+
+// update an isReserved parameter with an existing ITEM registration in an items table
+export async function updateIsReservedStatus( id, isReserved ) {
+	// const selectedItem = await getItemById(id);
+	// const currentStatus = selectedUser[0].isReserved;
+	// const isReserved = changeIsReservedStatus(currentStatus);
+	const data = await query(`UPDATE users SET isReserved = $2 WHERE id = $1 RETURNING *;`, [ id, isReserved ]);
 	return data.rows;
 }
