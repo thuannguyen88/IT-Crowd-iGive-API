@@ -48,31 +48,31 @@ itemsRouter.post("/", async (req, res) => {
   //   res.send("item created successfully");
 
   const {
-    userId,
+    user_id,
     category,
-    itemName,
-    itemDescription,
-    useByDate,
-    dateAdded,
+    item_name,
+    item_description,
+    use_by_date,
+    date_added,
     quantity,
     cloudinary_id,
-    isReserved,
+    is_reserved,
     availability,
-    timeslot,
+    time_slot
   } = req.body;
 
   const newItem = await createAGiveAwayItem(
-    userId,
+    user_id,
     category,
-    itemName,
-    itemDescription,
-    useByDate,
-    dateAdded,
+    item_name,
+    item_description,
+    use_by_date,
+    date_added,
     quantity,
     cloudinary_id,
-    isReserved,
+    is_reserved,
     availability,
-    timeslot
+    time_slot
   );
 
   res.json({
@@ -100,34 +100,34 @@ itemsRouter.delete("/:id", async (req, res) => {
 itemsRouter.put("/:id", async (req, res) => {
   //   res.send("item details updated successfully");
 
-  const itemId = Number(req.params.id);
+  const item_id = Number(req.params.id);
   const {
-    userId,
+    user_id,
     category,
-    itemName,
-    itemDescription,
-    useByDate,
-    dateAdded,
+    item_name,
+    item_description,
+    use_by_date,
+    date_added,
     quantity,
     cloudinary_id,
-    isReserved,
+    is_reserved,
     availability,
-    timeslot,
+    time_slot
   } = req.body;
 
   const updatedItem = await updateAGiveAwayItem(
-    itemId,
-    userId,
+    item_id,
+    user_id,
     category,
-    itemName,
-    itemDescription,
-    useByDate,
-    dateAdded,
+    item_name,
+    item_description,
+    use_by_date,
+    date_added,
     quantity,
     cloudinary_id,
-    isReserved,
+    is_reserved,
     availability,
-    timeslot
+    time_slot
   );
 
   res.json({
@@ -140,10 +140,10 @@ itemsRouter.put("/:id", async (req, res) => {
 itemsRouter.patch("/:id", async (req, res) => {
   //   res.send("item reserve status updated successfully");
 
-  const itemId = Number(req.params.id);
-  const { isReserved } = req.body;
+  const id = Number(req.params.id);
+  const { is_reserved } = req.body;
 
-  const itemReserveStatus = await updateIsReservedStatus(id, isReserved);
+  const itemReserveStatus = await updateIsReservedStatus(id, is_reserved);
 
   res.json({
     message: `item reserve status updated successfully`,
