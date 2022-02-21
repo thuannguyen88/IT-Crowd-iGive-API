@@ -3,14 +3,36 @@ import express from "express";
 
 const router = express.Router();
 
-/* GET users listing. */
-router.get("/", async function (req, res, next) {
-  const users = await getAllUsers();
+// /users -> get all users
+// /users/:id -> get specific user
 
-  res.json({
-    success: true,
-    payload: users,
-  });
+/* GET all users */
+router.get("/", async (req, res) => {
+  res.send("get all users");
+  // const users = await getAllUsers();
+
+  // res.json({
+  //   message: `all users`,
+  //   success: true,
+  //   payload: users,
+  // });
 });
+
+/* GET specific user */
+router.get("/:id", async (req, res) => {
+  res.send("get user by id");
+  // const id = Number(req.params.id);
+  // const requestedUser = await getUserById(id);
+
+  // res.json({
+  //   message: `found user with id ${id}`,
+  //   success: true,
+  //   payload: requestedUser,
+  // });
+});
+
+
+
+
 
 export default router;
