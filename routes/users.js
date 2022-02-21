@@ -106,9 +106,8 @@ usersRouter.delete("/:id", async (req, res) => {
 usersRouter.put("/:id", async (req, res) => {
   // res.send("user details updated successfully");
 
-  const paramsId = Number(req.params.id);
+  const id = Number(req.params.id);
   const {
-    id,
     firstName,
     lastName,
     email,
@@ -119,7 +118,6 @@ usersRouter.put("/:id", async (req, res) => {
   } = req.body;
 
   const updatedUser = await updateUser(
-    paramsId,
     id,
     firstName,
     lastName,
