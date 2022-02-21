@@ -100,7 +100,7 @@ itemsRouter.delete("/:id", async (req, res) => {
 itemsRouter.put("/:id", async (req, res) => {
   //   res.send("item details updated successfully");
 
-  const paramsId = Number(req.params.id);
+  const id = Number(req.params.id);
   const {
     itemId,
     userId,
@@ -117,7 +117,7 @@ itemsRouter.put("/:id", async (req, res) => {
   } = req.body;
 
   const updatedItem = await updateAGiveAwayItem(
-    paramsId,
+    id,
     itemId,
     userId,
     category,
