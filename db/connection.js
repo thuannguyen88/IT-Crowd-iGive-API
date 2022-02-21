@@ -1,10 +1,10 @@
 import pg from "pg";
 import { db } from "../config.js";
 
-// import { connectionString } from "../config.js";
+import { connectionString } from "../config.js";
 
 const pool = new pg.Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString,
   // user: db.user,
   // host: db.host,
   // database: db.database,
