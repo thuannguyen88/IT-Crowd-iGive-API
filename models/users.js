@@ -136,6 +136,6 @@ export async function updateIsReservedStatus( id, isReserved ) {
 	// const selectedItem = await getItemById(id);
 	// const currentStatus = selectedUser[0].isReserved;
 	// const isReserved = changeIsReservedStatus(currentStatus);
-	const data = await query(`UPDATE users SET isReserved = $2 WHERE id = $1 RETURNING *;`, [ id, isReserved ]);
+	const data = await query(`UPDATE items SET isReserved = $2 WHERE id = $1 RETURNING *;`, [ id, isReserved ]);
 	return data.rows;
 }

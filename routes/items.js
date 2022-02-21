@@ -140,7 +140,7 @@ itemsRouter.put("/:id", async (req, res) => {
 itemsRouter.patch("/:id", async (req, res) => {
   //   res.send("item reserve status updated successfully");
 
-  const id = Number(req.params.id);
+  const itemId = Number(req.params.id);
   const { isReserved } = req.body;
 
   const itemReserveStatus = await updateIsReservedStatus(id, isReserved);
