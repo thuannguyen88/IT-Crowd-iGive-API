@@ -19,7 +19,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res, next) => {
-  res.render("iGive api homepage", { title: "Books" });
+  res.render("iGive api homepage");
 });
 
 app.use("/api/users", usersRouter);
