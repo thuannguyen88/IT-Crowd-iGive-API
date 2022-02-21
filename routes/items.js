@@ -1,5 +1,12 @@
 import express from "express";
-// import { getAllUsers } from "../models/users.js";
+import {
+  getAllItems,
+  getAllItemsParticularUser,
+  createAGiveAwayItem,
+  updateAGiveAwayItem,
+  deleteAGiveAwayItem,
+  updateIsReservedStatus,
+} from "../models/users.js";
 
 const router = express.Router();
 
@@ -11,139 +18,140 @@ const router = express.Router();
 
 /* GET all items */
 router.get("/", async (req, res) => {
-  res.send("get all items");
+//   res.send("get all items");
 
-  // const items = await getAllItems();
+  const items = await getAllItems();
 
-  // res.json({
-  //   message: `all items`,
-  //   success: true,
-  //   payload: items,
-  // });
+  res.json({
+    message: `all items`,
+    success: true,
+    payload: items,
+  });
 });
 
 /* GET specific item */
 router.get("/:id", async (req, res) => {
-  res.send("get all items for specific user");
+//   res.send("get all items for specific user");
 
-  // const id = Number(req.params.id);
-  // const requestedItems = await getAllItemsParticularUser(id);
+  const id = Number(req.params.id);
+  const requestedItems = await getAllItemsParticularUser(id);
 
-  // res.json({
-  //   message: `found all items for user with id ${id}`,
-  //   success: true,
-  //   payload: requestedItems,
-  // });
+  res.json({
+    message: `found all items for user with id ${id}`,
+    success: true,
+    payload: requestedItems,
+  });
 });
 
 /* CREATE an item */
 router.post("/", async (req, res) => {
-  res.send("item created successfully");
+//   res.send("item created successfully");
 
-  //   const {
-  //     userId,
-  //     category,
-  //     itemName,
-  //     itemDescription,
-  //     useByDate,
-  //     dateAdded,
-  //     quantity,
-  //     cloudinary_id,
-  //     isReserved,
-  //     availability,
-  //     timeslot,
-  //   } = req.body;
+  const {
+    userId,
+    category,
+    itemName,
+    itemDescription,
+    useByDate,
+    dateAdded,
+    quantity,
+    cloudinary_id,
+    isReserved,
+    availability,
+    timeslot,
+  } = req.body;
 
-  //   const newItem = await createAGiveAwayItem(
-  //     userId,
-  //     category,
-  //     itemName,
-  //     itemDescription,
-  //     useByDate,
-  //     dateAdded,
-  //     quantity,
-  //     cloudinary_id,
-  //     isReserved,
-  //     availability,
-  //     timeslot
-  //   );
+  const newItem = await createAGiveAwayItem(
+    userId,
+    category,
+    itemName,
+    itemDescription,
+    useByDate,
+    dateAdded,
+    quantity,
+    cloudinary_id,
+    isReserved,
+    availability,
+    timeslot
+  );
 
-  //   res.json({
-  //     message: `item created successfully`,
-  //     success: true,
-  //     payload: newItem,
-  //   });
+  res.json({
+    message: `item created successfully`,
+    success: true,
+    payload: newItem,
+  });
 });
 
 /* DELETE specific item */
 router.delete("/:id", async (req, res) => {
-  res.send("item deleted successfully");
+//   res.send("item deleted successfully");
 
-  // const id = Number(req.params.id);
-  // const deletedItem = await deleteAGiveAwayItem(id);
+  const id = Number(req.params.id);
+  const deletedItem = await deleteAGiveAwayItem(id);
 
-  // res.json({
-  //   message: `item deleted successfully`,
-  //   success: true,
-  //   payload: deletedItem,
-  // });
+  res.json({
+    message: `item deleted successfully`,
+    success: true,
+    payload: deletedItem,
+  });
 });
 
 /* UPDATE specific item */
 router.put("/:id", async (req, res) => {
-  res.send("item details updated successfully");
-  //   const paramsId = Number(req.params.id);
-  //   const {
-  //     itemId,
-  //     userId,
-  //     category,
-  //     itemName,
-  //     itemDescription,
-  //     useByDate,
-  //     dateAdded,
-  //     quantity,
-  //     cloudinary_id,
-  //     isReserved,
-  //     availability,
-  //     timeslot,
-  //   } = req.body;
+//   res.send("item details updated successfully");
 
-  //   const updatedItem = await updateAGiveAwayItem(
-  //     paramsId,
-  //     itemId,
-  //     userId,
-  //     category,
-  //     itemName,
-  //     itemDescription,
-  //     useByDate,
-  //     dateAdded,
-  //     quantity,
-  //     cloudinary_id,
-  //     isReserved,
-  //     availability,
-  //     timeslot
-  //   );
+  const paramsId = Number(req.params.id);
+  const {
+    itemId,
+    userId,
+    category,
+    itemName,
+    itemDescription,
+    useByDate,
+    dateAdded,
+    quantity,
+    cloudinary_id,
+    isReserved,
+    availability,
+    timeslot,
+  } = req.body;
 
-  //   res.json({
-  //     message: `item details updated successfully`,
-  //     success: true,
-  //     payload: updatedItem,
-  //   });
+  const updatedItem = await updateAGiveAwayItem(
+    paramsId,
+    itemId,
+    userId,
+    category,
+    itemName,
+    itemDescription,
+    useByDate,
+    dateAdded,
+    quantity,
+    cloudinary_id,
+    isReserved,
+    availability,
+    timeslot
+  );
+
+  res.json({
+    message: `item details updated successfully`,
+    success: true,
+    payload: updatedItem,
+  });
 });
 
 router.patch("/:id", async (req, res) => {
-  res.send("item reserve status updated successfully");
+//   res.send("item reserve status updated successfully");
 
-  //   const id = Number(req.params.id);
-  //   const { isReserved } = req.body;
+  const id = Number(req.params.id);
+  const { isReserved } = req.body;
 
-  //   const itemReserveStatus = await updateIsReservedStatus(id, isReserved);
+  const itemReserveStatus = await updateIsReservedStatus(id, isReserved);
 
-  //   res.json({
-  //     message: `item reserve status updated successfully`,
-  //     success: true,
-  //     payload: itemReserveStatus,
-  //   });
+  res.json({
+    message: `item reserve status updated successfully`,
+    success: true,
+    payload: itemReserveStatus,
+  });
 });
 
 export default router;
