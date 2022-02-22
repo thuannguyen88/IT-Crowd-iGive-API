@@ -76,7 +76,7 @@ export async function getListings() {
     is_active,
     cloudinary_id,
     avatar,
-    user_id,
+    items.user_id,
     category,
     item_name,
     item_description,
@@ -91,8 +91,7 @@ export async function getListings() {
 FROM
 	users
 INNER JOIN items 
-    ON id = user_id
-ORDER BY id;`);
+    ON users.id = items.user_id;`);
 	return data.rows;
 }
 
