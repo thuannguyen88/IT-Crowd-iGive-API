@@ -64,29 +64,32 @@ usersRouter.get("/:id", async (req, res) => {
 
 /* CREATE new user */
 usersRouter.post("/", async (req, res) => {
-	const result = await cloudinary.uploader.upload(req.body.data);
-	//unique id for each image uploaded
-	const cloudinary_id = result.public_id;
-	// res.send("create new user");
+	try {
+		const result = await cloudinary.uploader.upload(req.body.data);
+		//unique id for each image uploaded
+		const cloudinary_id = result.public_id;
+		// res.send("create new user");
 
-	//user profile image as secure URL store in db
-	const avatar = result.secure_url;
+		//user profile image as secure URL store in db
+		const avatar = result.secure_url;
 
-	// res.send("create new user");
-	const { first_name, last_name, email, address, is_active, user_bio } =
-		req.body;
+		// res.send("create new user");
+		const { first_name, last_name, email, address, is_active, user_bio } =
+			req.body;
 
-	const newUser = await createUser(
-		first_name,
-		last_name,
-		email,
-		address,
-		is_active,
-		cloudinary_id,
-		avatar,
-		user_bio
-	);
-
+		const newUser = await createUser(
+			first_name,
+			last_name,
+			email,
+			address,
+			is_active,
+			cloudinary_id,
+			avatar,
+			user_bio
+		);
+	} catch (error) {
+		console.log(error);
+	}
 	res.json({
 		message: `user created successfully`,
 		success: true,

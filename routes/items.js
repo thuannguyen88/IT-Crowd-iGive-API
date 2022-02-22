@@ -48,43 +48,47 @@ itemsRouter.get("/:id", async (req, res) => {
 
 /* CREATE an item */
 itemsRouter.post("/", async (req, res) => {
-	const result = await cloudinary.uploader.upload(req.body.data);
-	//unique id for each image uploaded
-	const cloudinary_id = result.public_id;
-	// res.send("create new user");
+	try {
+		const result = await cloudinary.uploader.upload(req.body.data);
+		//unique id for each image uploaded
+		const cloudinary_id = result.public_id;
+		// res.send("create new user");
 
-	//user profile image as secure URL store in db
-	const item_image = result.secure_url;
+		//user profile image as secure URL store in db
+		const item_image = result.secure_url;
 
-	//   res.send("item created successfully");
+		//   res.send("item created successfully");
 
-	const {
-		user_id,
-		category,
-		item_name,
-		item_description,
-		use_by_date,
-		date_added,
-		quantity,
-		is_reserved,
-		availability,
-		time_slot,
-	} = req.body;
+		const {
+			user_id,
+			category,
+			item_name,
+			item_description,
+			use_by_date,
+			date_added,
+			quantity,
+			is_reserved,
+			availability,
+			time_slot,
+		} = req.body;
 
-	const newItem = await createAGiveAwayItem(
-		user_id,
-		category,
-		item_name,
-		item_description,
-		use_by_date,
-		date_added,
-		quantity,
-		cloudinary_id,
-		item_image,
-		is_reserved,
-		availability,
-		time_slot
-	);
+		const newItem = await createAGiveAwayItem(
+			user_id,
+			category,
+			item_name,
+			item_description,
+			use_by_date,
+			date_added,
+			quantity,
+			cloudinary_id,
+			item_image,
+			is_reserved,
+			availability,
+			time_slot
+		);
+	} catch (error) {
+		console.log(error);
+	}
 
 	res.json({
 		message: `item created successfully`,
