@@ -66,6 +66,36 @@ export async function updateIsActiveStatus( id, is_active ) {
 	return data.rows;
 }
 
+// fetch JOINED data of USERS and ITEMS on ID 
+export async function getListings() {
+	const data = await query(
+`SELECT
+    first_name,
+    last_name,
+    address,
+    is_active,
+    cloudinary_id,
+    avatar,
+    user_id,
+    category,
+    item_name,
+    item_description,
+    use_by_date,
+    date_added,
+    quantity,
+    cloudinary_id,
+    item_image,
+    is_reserved,
+    availability,
+    time_slot
+FROM
+	users
+INNER JOIN items 
+    ON id = user_id
+ORDER BY id;`);
+	return data.rows;
+}
+
 // -=-=-=-=-=-=-=-=-=-=-=-=- ITEMS MODELS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 //fetch all ITEMS from a items table
@@ -122,6 +152,12 @@ export async function updateAGiveAwayItem(
 // delete an existing ITEM registration in an items table
 export async function deleteAGiveAwayItem( id ) {
 	const data = await query(`DELETE FROM items WHERE item_id=$1;`, [ id ]);
+	return data.rows;
+}
+
+// delete all ITEMS registrations in an items table belongs to particular USER
+export async function deleteAllItemsOfParticularUser( id ) {
+	const data = await query(`DELETE FROM items WHERE user_id=$1;`, [ id ]);
 	return data.rows;
 }
 

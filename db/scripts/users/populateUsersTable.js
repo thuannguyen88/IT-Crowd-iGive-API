@@ -9,9 +9,10 @@ async function populateUserTable() {
     const address = users[i].address;
     const is_active = users[i].is_active;
     const cloudinary_id = users[i].cloudinary_id;
+    const avatar = users[i].avatar;
     const user_bio = users[i].user_bio;
     const res = await query(
-      `INSERT INTO users( first_name, last_name, email, address, is_active, cloudinary_id, user_bio) VALUES( $1, $2, $3, $4, $5, $6, $7 ) RETURNING *`,
+      `INSERT INTO users( first_name, last_name, email, address, is_active, cloudinary_id, avatar, user_bio) VALUES( $1, $2, $3, $4, $5, $6, $7, $8 ) RETURNING *`,
       [
         first_name,
         last_name,
@@ -19,6 +20,7 @@ async function populateUserTable() {
         address,
         is_active,
         cloudinary_id,
+        avatar,
         user_bio
       ]
     );

@@ -7,4 +7,4 @@ export const db = {
   database: process.env.PG_DATABASE,
 };
 
-export const connectionString = process.env.DATABASE_URL;
+// export const connectionString = process.env.DATABASE_URL;

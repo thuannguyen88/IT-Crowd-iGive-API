@@ -6,6 +6,7 @@ import {
   updateUser,
   deleteUser,
   updateIsActiveStatus,
+  getListings
 } from "../models/users.js";
 
 const usersRouter = express.Router();
@@ -147,6 +148,21 @@ usersRouter.patch("/:id", async (req, res) => {
     message: `user active status updated successfully`,
     success: true,
     payload: userActiveStatus,
+  });
+});
+
+// =-=-=-=-=-=-=-=-=-=-=
+
+usersRouter.get("/listings", async (req, res) => {
+  //   res.send("item reserve status updated successfully");
+
+
+  const getAllListings = await getListings();
+
+  res.json({
+    message: `all users and items fetched successfully`,
+    success: true,
+    payload: getAllListings,
   });
 });
 

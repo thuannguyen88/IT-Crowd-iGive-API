@@ -5,6 +5,7 @@ import {
   createAGiveAwayItem,
   updateAGiveAwayItem,
   deleteAGiveAwayItem,
+  deleteAllItemsOfParticularUser,
   updateIsReservedStatus,
 } from "../models/users.js";
 
@@ -93,6 +94,20 @@ itemsRouter.delete("/:id", async (req, res) => {
     message: `item deleted successfully`,
     success: true,
     payload: deletedItem,
+  });
+});
+
+/* DELETE all items of a particular USER */
+itemsRouter.delete("/:id", async (req, res) => {
+  //   res.send("item deleted successfully");
+
+  const id = Number(req.params.id);
+  const deletedItems = await deleteAllItemsOfParticularUser(id);
+
+  res.json({
+    message: `all items deleted successfully`,
+    success: true,
+    payload: deletedItems,
   });
 });
 
