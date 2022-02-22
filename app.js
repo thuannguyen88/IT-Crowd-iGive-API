@@ -8,6 +8,7 @@ import logger from "morgan";
 
 import usersRouter from "./routes/users.js";
 import itemsRouter from "./routes/items.js";
+import listingsRouter from "./routes/listings.js";
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.get("/", (req, res, next) => {
 
 app.use("/api/users", usersRouter);
 app.use("/api/items", itemsRouter);
+app.use("/api/listings", listingsRouter);
 
 app.use(function (req, res, next) {
   res
