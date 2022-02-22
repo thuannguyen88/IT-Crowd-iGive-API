@@ -10,6 +10,8 @@ import {
 
 import { cloudinary } from "../config.js";
 
+// cloudinary.upload.single
+
 const usersRouter = express.Router();
 
 // GET request to /users -> get all users
@@ -61,7 +63,7 @@ usersRouter.get("/:id", async (req, res) => {
 // });
 
 /* CREATE new user */
-usersRouter.post("/", upload.single("image"), async (req, res) => {
+usersRouter.post("/", cloudinary.upload.single("image"), async (req, res) => {
   const result = await cloudinary.uploader.upload(req.file.path);
   //unique id for each image uploaded
   const cloudinary_id = result.public_id;
