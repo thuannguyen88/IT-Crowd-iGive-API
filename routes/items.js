@@ -48,7 +48,7 @@ itemsRouter.get("/:id", async (req, res) => {
 
 /* CREATE an item */
 itemsRouter.post("/", async (req, res) => {
-	const result = await cloudinary.uploader.upload(req.file.path);
+	const result = await cloudinary.uploader.upload(req.body.data);
 	//unique id for each image uploaded
 	const cloudinary_id = result.public_id;
 	// res.send("create new user");
