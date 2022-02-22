@@ -70,6 +70,7 @@ export async function updateIsActiveStatus( id, is_active ) {
 export async function getListings() {
 	const data = await query(
 `SELECT
+    users.id,
     first_name,
     last_name,
     address,
