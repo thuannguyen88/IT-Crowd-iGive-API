@@ -6,7 +6,6 @@ import {
   updateUser,
   deleteUser,
   updateIsActiveStatus,
-  getListings
 } from "../models/users.js";
 
 const usersRouter = express.Router();
@@ -69,7 +68,7 @@ usersRouter.post("/", async (req, res) => {
     address,
     is_active,
     cloudinary_id,
-    user_bio
+    user_bio,
   } = req.body;
 
   const newUser = await createUser(
@@ -115,7 +114,7 @@ usersRouter.put("/:id", async (req, res) => {
     address,
     is_active,
     cloudinary_id,
-    user_bio
+    user_bio,
   } = req.body;
 
   const updatedUser = await updateUser(
@@ -155,7 +154,6 @@ usersRouter.patch("/:id", async (req, res) => {
 
 // usersRouter.get("/listings", async (req, res) => {
 //   //   res.send("item reserve status updated successfully");
-
 
 //   const getAllListings = await getListings();
 

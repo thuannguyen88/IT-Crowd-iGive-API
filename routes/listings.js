@@ -14,3 +14,5 @@ listingsRouter.get("/", async (req, res) => {
     payload: getAllListings,
   });
 });
+
+export default listingsRouter;
