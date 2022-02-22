@@ -69,32 +69,39 @@ export async function updateIsActiveStatus( id, is_active ) {
 // fetch JOINED data of USERS and ITEMS on ID 
 export async function getListings() {
 	const data = await query(
-`SELECT
-    users.id,
-    first_name,
-    last_name,
-    address,
-    is_active,
-    cloudinary_id,
-    avatar,
-    items.user_id,
-    category,
-    item_name,
-    item_description,
-    use_by_date,
-    date_added,
-    quantity,
-    cloudinary_id,
-    item_image,
-    is_reserved,
-    availability,
-    time_slot
+`SELECT *
 FROM
 	users
 INNER JOIN items 
     ON users.id = items.user_id;`);
+
 	return data.rows;
 }
+
+// `SELECT
+//     users.id,
+//     first_name,
+//     last_name,
+//     address,
+//     is_active,
+//     cloudinary_id,
+//     avatar,
+//     items.user_id,
+//     category,
+//     item_name,
+//     item_description,
+//     use_by_date,
+//     date_added,
+//     quantity,
+//     cloudinary_id,
+//     item_image,
+//     is_reserved,
+//     availability,
+//     time_slot
+// FROM
+// 	users
+// INNER JOIN items 
+//     ON users.id = items.user_id;`);
 
 // -=-=-=-=-=-=-=-=-=-=-=-=- ITEMS MODELS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
