@@ -87,14 +87,14 @@ usersRouter.post("/", async (req, res) => {
 			avatar,
 			user_bio
 		);
+		res.json({
+			message: `user created successfully`,
+			success: true,
+			payload: newUser,
+		});
 	} catch (error) {
 		console.log(error);
 	}
-	res.json({
-		message: `user created successfully`,
-		success: true,
-		payload: newUser,
-	});
 });
 
 /* DELETE specific user */

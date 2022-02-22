@@ -86,15 +86,14 @@ itemsRouter.post("/", async (req, res) => {
 			availability,
 			time_slot
 		);
+		res.json({
+			message: `item created successfully`,
+			success: true,
+			payload: newItem,
+		});
 	} catch (error) {
 		console.log(error);
 	}
-
-	res.json({
-		message: `item created successfully`,
-		success: true,
-		payload: newItem,
-	});
 });
 
 /* DELETE specific item */
