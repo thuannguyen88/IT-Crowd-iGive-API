@@ -72,7 +72,7 @@ usersRouter.post("/", upload.single("avatar"), async (req, res) => {
 		const { first_name, last_name, email, address, is_active, user_bio } =
 			req.body;
 
-		const result = await uploader.upload(req.file.path);
+		const result = await uploader.upload(req.file);
 		const avatar = result.secure_url;
 		const cloudinary_id = result.public_id;
 
