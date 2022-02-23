@@ -1,8 +1,9 @@
 import express from "express";
-// import { uploadAvatar, dataUri } from "../multer/index.js";
-import { uploader, cloudinaryConfig } from "../config.js";
-// import { upload } from "../multer/index.js";
 
+//import cloudinary.uploader from cloudinary import and config
+import { uploader } from "../config.js";
+
+//import models
 import {
 	getAllUsers,
 	getUserById,
@@ -12,10 +13,7 @@ import {
 	updateIsActiveStatus,
 } from "../models/users.js";
 
-// import { cloudinary } from "../config.js";
-
-// cloudinary.upload.single
-
+//create instance of usersRouter
 const usersRouter = express.Router();
 
 // GET request to /users -> get all users
@@ -68,21 +66,29 @@ usersRouter.get("/:id", async (req, res) => {
 
 /* CREATE new user */
 usersRouter.post("/", async (req, res) => {
+	//extract the data from the register user form on client , sent via req.body
 	const { first_name, last_name, email, address, image, is_active, user_bio } =
 		req.body;
 
+	//some variables are unavailable unless scoped outside the try block
 	let result;
-	// let avatar;
-	// let cloudinary_id;
 
 	try {
+		//cloudinary uploader passed image which is a base 64 encoded image
 		result = await uploader.upload(image);
 	} catch (error) {
+		//if this fails, let the client know
 		console.log("upload failed", error);
+		//bad practice to return like this but ok for development
 		return;
 	}
+	//cloudinary returned us an object which we saved as const result
+	//we store the image url property as avatar
+	//we store the public_id of that image as unique cloudinary_id
 	const avatar = result.secure_url;
 	const cloudinary_id = result.public_id;
+
+	//insert these values into the users table
 	let newUser;
 	try {
 		newUser = await createUser(
@@ -109,13 +115,11 @@ usersRouter.post("/", async (req, res) => {
 
 /* DELETE specific user */
 usersRouter.delete("/:id", async (req, res) => {
-	// res.send("user deleted");
-	//get the user whose image we want to delete from cloudinary
-	const user = await getUserById(id);
-	await uploader.destroy(user.cloudinary_id);
-
 	const id = Number(req.params.id);
 	const deletedUser = await deleteUser(id);
+	//also delete cloudinary id of the user we want to delete
+	const user = await getUserById(id);
+	await uploader.destroy(user.cloudinary_id);
 
 	res.json({
 		message: `user successfully deleted`,
