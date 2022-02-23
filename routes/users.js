@@ -1,7 +1,6 @@
 import express from "express";
-import { uploadAvatar } from "../multer/index.js";
+import { uploadAvatar } from "../multer";
 import { uploader } from "./config.js";
-import { uploadAvatar, uploadItemImage } from "./multer";
 
 import {
 	getAllUsers,
