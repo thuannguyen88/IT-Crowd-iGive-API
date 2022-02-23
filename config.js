@@ -14,7 +14,9 @@ export const connectionString = process.env.DATABASE_URL;
 
 //cloudinary import and config
 
-import { config, uploader } from "cloudinary";
+import * as Cloudinary from "cloudinary";
+
+const { uploader } = Cloudinary.v2;
 
 const cloudinaryConfig = (req, res, next) => {
 	config({
@@ -24,6 +26,6 @@ const cloudinaryConfig = (req, res, next) => {
 	next();
 };
 
-export { cloudinaryConfig, uploader };
+export { uploader };
 
 console.log(cloudinaryConfig);

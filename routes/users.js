@@ -67,8 +67,6 @@ usersRouter.get("/:id", async (req, res) => {
 
 /* CREATE new user */
 usersRouter.post("/", uploadAvatar, async (req, res) => {
-	console.log(req.file.path);
-
 	// res.json(result);
 
 	if (req.file) {
