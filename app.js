@@ -19,12 +19,14 @@ app.use(fileupload({ useTempFiles: true }));
 
 app.use(logger("dev"));
 
-app.get("/*", (req, res) =>
-	res.sendFile(resolve(__dirname, "../public/index.html"))
-);
+// app.get("/*", (req, res) =>
+// 	res.sendFile(resolve(__dirname, "../public/index.html"))
+// );
 
 app.use(cors());
 
+//23.2.22 Arshi helped us target error with accurate try catch blocks
+//below is the limit on files sent from client to server
 app.use(
 	express.json({
 		limit: "20mb",
