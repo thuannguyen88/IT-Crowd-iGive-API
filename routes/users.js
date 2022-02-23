@@ -65,7 +65,7 @@ usersRouter.get("/:id", async (req, res) => {
 /* CREATE new user */
 usersRouter.post("/", async (req, res) => {
 	try {
-		const result = await cloudinary.uploader.upload(req.files.path);
+		const result = await cloudinary.uploader.upload(req.files);
 		//unique id for each image uploaded
 		const cloudinary_id = result.public_id;
 		// res.send("create new user");
