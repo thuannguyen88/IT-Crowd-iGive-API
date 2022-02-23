@@ -93,9 +93,7 @@ usersRouter.post("/", uploadAvatar, async (req, res) => {
 				})
 			);
 	}
-});
 
-try {
 	const { first_name, last_name, email, address, is_active, user_bio } =
 		req.body;
 
@@ -114,9 +112,7 @@ try {
 		success: true,
 		payload: newUser,
 	});
-} catch (error) {
-	console.log(error);
-}
+});
 
 /* DELETE specific user */
 usersRouter.delete("/:id", async (req, res) => {
