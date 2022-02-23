@@ -15,7 +15,7 @@ export const connectionString = process.env.DATABASE_URL;
 //cloudinary import and config
 
 import * as Cloudinary from "cloudinary";
-const cloudinary = Cloudinary.v2;
+export const cloudinary = Cloudinary.v2;
 
 export const cloudinaryConfig = cloudinary.config({
 	// cloud_name: process.env.CLOUDINARY_NAME,
