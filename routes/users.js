@@ -68,22 +68,24 @@ usersRouter.get("/:id", async (req, res) => {
 
 /* CREATE new user */
 usersRouter.post("/", async (req, res) => {
+	const { first_name, last_name, email, address, image, is_active, user_bio } =
+		req.body;
+
+	let result;
+	// let avatar;
+	// let cloudinary_id;
+
 	try {
-		const {
-			first_name,
-			last_name,
-			email,
-			address,
-			image,
-			is_active,
-			user_bio,
-		} = req.body;
-
-		const result = await uploader.upload(image);
-		const avatar = result.secure_url;
-		const cloudinary_id = result.public_id;
-
-		const newUser = await createUser(
+		result = await uploader.upload(image);
+	} catch (error) {
+		console.log("upload failed", error);
+		return;
+	}
+	const avatar = result.secure_url;
+	const cloudinary_id = result.public_id;
+	let newUser;
+	try {
+		newUser = await createUser(
 			first_name,
 			last_name,
 			email,
@@ -93,14 +95,16 @@ usersRouter.post("/", async (req, res) => {
 			avatar,
 			user_bio
 		);
-		res.json({
-			message: `user created successfully`,
-			success: true,
-			payload: newUser,
-		});
 	} catch (error) {
-		console.log(error);
+		console.log("create newUser failed", error);
+		return;
 	}
+
+	res.json({
+		message: `user created successfully`,
+		success: true,
+		payload: newUser,
+	});
 });
 
 /* DELETE specific user */
