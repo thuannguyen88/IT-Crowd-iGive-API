@@ -67,29 +67,39 @@ usersRouter.get("/:id", async (req, res) => {
 
 /* CREATE new user */
 usersRouter.post("/", async (req, res) => {
-	// res.json(result);
+	try {
+		const {
+			first_name,
+			last_name,
+			email,
+			address,
+			is_active,
+			image,
+			user_bio,
+		} = req.body;
 
-	const { image, first_name, last_name, address, email } = req.body;
+		const result = await uploader.upload(image);
+		const avatar = result.secure_url;
+		const cloudinary_id = result.public_id;
 
-	const result = await uploader.upload(image);
-	const avatar = result.secure_url;
-	const cloudinary_id = result.public_id;
-
-	const newUser = await createUser(
-		first_name,
-		last_name,
-		email,
-		address,
-		is_active,
-		cloudinary_id,
-		avatar,
-		user_bio
-	);
-	res.json({
-		message: `user created successfully`,
-		success: true,
-		payload: newUser,
-	});
+		const newUser = await createUser(
+			first_name,
+			last_name,
+			email,
+			address,
+			is_active,
+			cloudinary_id,
+			avatar,
+			user_bio
+		);
+		res.json({
+			message: `user created successfully`,
+			success: true,
+			payload: newUser,
+		});
+	} catch (error) {
+		console.log(error);
+	}
 });
 
 /* DELETE specific user */
