@@ -1,17 +1,16 @@
-// //multer import and config
-// import multer from "multer";
+import multer from "multer";
+import path from "path";
 
-// import Datauri from "datauri";
-
-// import path from "path";
-
-// const storage = multer.memoryStorage();
-// const uploadAvatar = multer({ storage }).single("avatar");
-// const uploadItemImage = multer({ storage }).single("item_image");
-
-// const dUri = new Datauri();
-
-// const dataUri = async (req) =>
-// 	await dUri.format(path.extname(req.file).toString(), req.file.buffer);
-
-// export { uploadAvatar, uploadItemImage, dataUri };
+// Multer config
+export const multerUpload = () =>
+	multer({
+		storage: multer.diskStorage({}),
+		fileFilter: (req, file, cb) => {
+			let ext = path.extname(file.originalname);
+			if (ext !== ".jpg" && ext !== ".jpeg" && ext !== ".png") {
+				cb(new Error("File type is not supported"), false);
+				return;
+			}
+			cb(null, true);
+		},
+	});
