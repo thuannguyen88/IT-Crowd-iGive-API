@@ -2,7 +2,7 @@ import multer from "multer";
 import path from "path";
 
 // Multer config
-export const multerUpload = () =>
+export const upload = () =>
 	multer({
 		storage: multer.diskStorage({}),
 		fileFilter: (req, file, cb) => {
