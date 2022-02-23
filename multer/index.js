@@ -6,8 +6,8 @@ import Datauri from "datauri";
 import path from "path";
 
 const storage = multer.memoryStorage();
-export const uploadAvatar = multer({ storage }).single("avatar");
-export const uploadItemImage = multer({ storage }).single("item_image");
+const uploadAvatar = multer({ storage }).single("avatar");
+const uploadItemImage = multer({ storage }).single("item_image");
 
 const dUri = new Datauri();
 
