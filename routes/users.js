@@ -1,7 +1,7 @@
 import express from "express";
 // import { uploadAvatar, dataUri } from "../multer/index.js";
 import { uploader, cloudinaryConfig } from "../config.js";
-import { upload } from "../multer/index.js";
+// import { upload } from "../multer/index.js";
 
 import {
 	getAllUsers,
@@ -67,12 +67,19 @@ usersRouter.get("/:id", async (req, res) => {
 // });
 
 /* CREATE new user */
-usersRouter.post("/", upload.single("avatar"), async (req, res) => {
+usersRouter.post("/", async (req, res) => {
 	try {
-		const { first_name, last_name, email, address, is_active, user_bio } =
-			req.body;
+		const {
+			first_name,
+			last_name,
+			email,
+			address,
+			image,
+			is_active,
+			user_bio,
+		} = req.body;
 
-		const result = await uploader.upload(req.file);
+		const result = await uploader.upload(image);
 		const avatar = result.secure_url;
 		const cloudinary_id = result.public_id;
 
