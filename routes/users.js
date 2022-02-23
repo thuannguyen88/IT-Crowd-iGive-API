@@ -67,7 +67,7 @@ usersRouter.get("/:id", async (req, res) => {
 /* CREATE new user */
 usersRouter.post("/", upload.single("avatar"), async (req, res) => {
 	console.log(req.path);
-}
+});
 // 	try {
 // 		const result = await cloudinary.uploader.upload(req.file.path);
 // 		//unique id for each image uploaded
