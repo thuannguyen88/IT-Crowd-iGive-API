@@ -11,6 +11,7 @@ import itemsRouter from "./routes/items.js";
 import listingsRouter from "./routes/listings.js";
 
 const app = express();
+import fileupload from "express-fileupload";
 app.use(fileupload({ useTempFiles: true }));
 
 app.use(logger("dev"));
