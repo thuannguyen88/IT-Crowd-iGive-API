@@ -69,23 +69,21 @@ usersRouter.get("/:id", async (req, res) => {
 usersRouter.post("/", async (req, res) => {
 	// res.json(result);
 
-	const image = req.body.image;
-
-	const data = req.body.data;
+	const { image, first_name, last_name, address, email } = req.body;
 
 	const result = await uploader.upload(image);
 	const avatar = result.secure_url;
 	const cloudinary_id = result.public_id;
 
 	const newUser = await createUser(
-		data.first_name,
-		data.last_name,
-		data.email,
-		data.address,
-		data.is_active,
+		first_name,
+		last_name,
+		email,
+		address,
+		is_active,
 		cloudinary_id,
 		avatar,
-		data.user_bio
+		user_bio
 	);
 	res.json({
 		message: `user created successfully`,
