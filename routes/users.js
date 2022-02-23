@@ -1,4 +1,5 @@
 import express from "express";
+import upload from "multer";
 import {
 	getAllUsers,
 	getUserById,
@@ -63,9 +64,9 @@ usersRouter.get("/:id", async (req, res) => {
 // });
 
 /* CREATE new user */
-usersRouter.post("/", async (req, res) => {
+usersRouter.post("/", upload.single("avatar"), async (req, res) => {
 	try {
-		const result = await cloudinary.uploader.upload(req.files);
+		const result = await cloudinary.uploader.upload(req.file.path);
 		//unique id for each image uploaded
 		const cloudinary_id = result.public_id;
 		// res.send("create new user");

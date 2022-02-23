@@ -1,4 +1,5 @@
 import express from "express";
+import upload from "multer";
 import {
 	getAllItems,
 	getAllItemsParticularUser,
@@ -47,7 +48,7 @@ itemsRouter.get("/:id", async (req, res) => {
 });
 
 /* CREATE an item */
-itemsRouter.post("/", async (req, res) => {
+itemsRouter.post("/", upload.single("item_image"), async (req, res) => {
 	try {
 		const result = await cloudinary.uploader.upload(req.body.data);
 		//unique id for each image uploaded
