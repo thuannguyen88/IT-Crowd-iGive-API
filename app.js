@@ -8,7 +8,6 @@ import __dirname from "./dirname.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import logger from "morgan";
-app.use("*", cloudinaryConfig);
 
 import usersRouter from "./routes/users.js";
 import itemsRouter from "./routes/items.js";
