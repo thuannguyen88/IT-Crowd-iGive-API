@@ -66,8 +66,9 @@ usersRouter.get("/:id", async (req, res) => {
 
 /* CREATE new user */
 usersRouter.post("/", uploadAvatar, async (req, res) => {
-	const result = await cloudinary.uploader.upload(req.file.path);
-	res.json(result);
+	console.log(req);
+	// const result = await cloudinary.uploader.upload(req.file.path);
+	// res.json(result);
 });
 
 //try{
