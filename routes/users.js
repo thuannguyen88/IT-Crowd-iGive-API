@@ -69,7 +69,7 @@ usersRouter.get("/:id", async (req, res) => {
 usersRouter.post("/", async (req, res) => {
 	// res.json(result);
 
-	const { image } = req.body.image;
+	const image = req.body.image;
 
 	const { first_name, last_name, email, address, is_active, user_bio } =
 		req.body.data;
