@@ -8,7 +8,7 @@ import {
 	updateIsActiveStatus,
 } from "../models/users.js";
 
-import { cloudinaryConfig } from "../config.js";
+import { cloudinary } from "../config.js";
 
 // cloudinary.upload.single
 
@@ -65,7 +65,7 @@ usersRouter.get("/:id", async (req, res) => {
 /* CREATE new user */
 usersRouter.post("/", async (req, res) => {
 	try {
-		const result = await cloudinaryConfig.uploader.upload(req.body.data);
+		const result = await cloudinary.uploader.upload(req.body.data);
 		//unique id for each image uploaded
 		const cloudinary_id = result.public_id;
 		// res.send("create new user");
@@ -102,7 +102,7 @@ usersRouter.delete("/:id", async (req, res) => {
 	// res.send("user deleted");
 	//get the user whose image we want to delete from cloudinary
 	const user = await getUserById(id);
-	await cloudinaryConfig.uploader.destroy(user.cloudinary_id);
+	await cloudinary.uploader.destroy(user.cloudinary_id);
 
 	const id = Number(req.params.id);
 	const deletedUser = await deleteUser(id);
