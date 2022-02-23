@@ -18,11 +18,11 @@ import * as Cloudinary from "cloudinary";
 
 const { uploader } = Cloudinary.v2;
 
-const cloudinaryConfig = config({
-	cloudinary_url: process.env.CLOUDINARY_URL,
-	secure: true,
-});
-
-export { uploader, cloudinaryConfig };
+const cloudinaryConfig = () =>
+	config({
+		cloudinary_url: process.env.CLOUDINARY_URL,
+		secure: true,
+	});
+export { cloudinaryConfig, uploader };
 
 console.log(cloudinaryConfig);
