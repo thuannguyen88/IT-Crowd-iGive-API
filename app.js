@@ -1,10 +1,14 @@
 import express from "express";
 import path from "path";
+import { resolve } from "path";
+// import { uploader, cloudinaryConfig } from "./config.js";
+// import { uploadAvatar, uploadItemImagedataUri } from "./multer";
 
 import __dirname from "./dirname.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import logger from "morgan";
+app.use("*", cloudinaryConfig);
 
 import usersRouter from "./routes/users.js";
 import itemsRouter from "./routes/items.js";
@@ -14,9 +18,12 @@ const app = express();
 import fileupload from "express-fileupload";
 app.use(fileupload({ useTempFiles: true }));
 
-import multer from "multer";
 app.use(logger("dev"));
-app.use(multer());
+
+app.get("/*", (req, res) =>
+	res.sendFile(resolve(__dirname, "../public/index.html"))
+);
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ limit: "50mb" }));

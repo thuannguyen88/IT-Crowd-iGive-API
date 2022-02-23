@@ -1,5 +1,7 @@
 import express from "express";
 import { uploadAvatar } from "../multer/index.js";
+import { uploader } from "./config.js";
+import { uploadAvatar, uploadItemImage } from "./multer";
 
 import {
 	getAllUsers,
@@ -66,42 +68,58 @@ usersRouter.get("/:id", async (req, res) => {
 
 /* CREATE new user */
 usersRouter.post("/", uploadAvatar, async (req, res) => {
-	console.log(req);
-	// const result = await cloudinary.uploader.upload(req.file.path);
+	console.log(req.file.path);
+
 	// res.json(result);
+
+	if (req.file) {
+		const file = dataUri(req).content;
+		return uploader
+			.upload(file)
+			.then((result) => {
+				const avatar = result.url;
+				const cloudinary_id = result.public_id;
+				return res.status(200).json({
+					messge: "Your image has been uploded successfully to cloudinary",
+					data: {
+						avatar,
+						cloudinary_id,
+					},
+				});
+			})
+			.catch((err) =>
+				res.status(400).json({
+					messge: "someting went wrong while processing your request",
+					data: {
+						err,
+					},
+				})
+			);
+	}
 });
 
-//try{
-// 		//unique id for each image uploaded
-// 		const cloudinary_id = result.public_id;
-// 		// res.send("create new user");
+try {
+	const { first_name, last_name, email, address, is_active, user_bio } =
+		req.body;
 
-// 		//user profile image as secure URL store in db
-// 		const avatar = result.secure_url;
-
-// 		// res.send("create new user");
-// 		const { first_name, last_name, email, address, is_active, user_bio } =
-// 			req.body;
-
-// 		const newUser = await createUser(
-// 			first_name,
-// 			last_name,
-// 			email,
-// 			address,
-// 			is_active,
-// 			cloudinary_id,
-// 			avatar,
-// 			user_bio
-// 		);
-// 		res.json({
-// 			message: `user created successfully`,
-// 			success: true,
-// 			payload: newUser,
-// 		});
-// 	} catch (error) {
-// 		console.log(error);
-// 	}
-// });
+	const newUser = await createUser(
+		first_name,
+		last_name,
+		email,
+		address,
+		is_active,
+		cloudinary_id,
+		avatar,
+		user_bio
+	);
+	res.json({
+		message: `user created successfully`,
+		success: true,
+		payload: newUser,
+	});
+} catch (error) {
+	console.log(error);
+}
 
 /* DELETE specific user */
 usersRouter.delete("/:id", async (req, res) => {

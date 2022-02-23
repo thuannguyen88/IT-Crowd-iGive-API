@@ -14,16 +14,16 @@ export const connectionString = process.env.DATABASE_URL;
 
 //cloudinary import and config
 
-import * as Cloudinary from "cloudinary";
-export const cloudinary = Cloudinary.v2;
+import { config, uploader } from "cloudinary";
 
-export const cloudinaryConfig = cloudinary.config({
-	// cloud_name: process.env.CLOUDINARY_NAME,
-	// api_key: process.env.CLOUDINARY_API_KEY,
-	// api_secret: process.env.CLOUDINARY_API_SECRET,
+const cloudinaryConfig = (req, res, next) => {
+	config({
+		cloudinary_url: process.env.CLOUDINARY_URL,
+		secure: true,
+	});
+	next();
+};
 
-	cloudinary_url: process.env.CLOUDINARY_URL,
-	secure: true,
-});
+export { cloudinaryConfig, uploader };
 
 console.log(cloudinaryConfig);
