@@ -1,5 +1,5 @@
 import express from "express";
-import { uploadAvatar } from "../multer";
+import { uploadAvatar } from "../multer/index.js";
 import { uploader } from "./config.js";
 
 import {
