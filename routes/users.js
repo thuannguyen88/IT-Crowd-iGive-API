@@ -1,6 +1,6 @@
 import express from "express";
 import { uploadAvatar } from "../multer/index.js";
-import { uploader } from "./config.js";
+import { uploader } from "../config.js";
 
 import {
 	getAllUsers,
@@ -11,7 +11,7 @@ import {
 	updateIsActiveStatus,
 } from "../models/users.js";
 
-import { cloudinary } from "../config.js";
+// import { cloudinary } from "../config.js";
 
 // cloudinary.upload.single
 

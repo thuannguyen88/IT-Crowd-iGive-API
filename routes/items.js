@@ -10,7 +10,7 @@ import {
 	updateIsReservedStatus,
 } from "../models/users.js";
 
-import { cloudinary } from "../config.js";
+// import { cloudinary } from "../config.js";
 
 const itemsRouter = express.Router();
 
