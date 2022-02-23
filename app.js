@@ -14,7 +14,9 @@ const app = express();
 import fileupload from "express-fileupload";
 app.use(fileupload({ useTempFiles: true }));
 
+import multer from "multer";
 app.use(logger("dev"));
+app.use(multer());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ limit: "50mb" }));
