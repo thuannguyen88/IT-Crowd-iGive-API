@@ -1,5 +1,5 @@
 import express from "express";
-import { uploadItemImage } from "../multer/index.js";
+// import { uploadItemImage } from "../multer/index.js";
 import {
 	getAllItems,
 	getAllItemsParticularUser,
@@ -9,6 +9,8 @@ import {
 	deleteAllItemsOfParticularUser,
 	updateIsReservedStatus,
 } from "../models/users.js";
+
+import { uploader } from "../config.js";
 
 // import { cloudinary } from "../config.js";
 
@@ -48,9 +50,9 @@ itemsRouter.get("/:id", async (req, res) => {
 });
 
 /* CREATE an item */
-itemsRouter.post("/", uploadItemImage, async (req, res) => {
+itemsRouter.post("/", async (req, res) => {
 	try {
-		const result = await cloudinary.uploader.upload(req.file.path);
+		const result = await uploader.upload(req.file.path);
 		//unique id for each image uploaded
 		const cloudinary_id = result.public_id;
 		// res.send("create new user");
@@ -103,7 +105,7 @@ itemsRouter.delete("/:id", async (req, res) => {
 
 	//get the user whose image we want to delete from cloudinary
 	const user = await getUserById(id);
-	await cloudinary.uploader.destroy(user.cloudinary_id);
+	await uploader.destroy(user.cloudinary_id);
 
 	const id = Number(req.params.id);
 	const deletedItem = await deleteAGiveAwayItem(id);

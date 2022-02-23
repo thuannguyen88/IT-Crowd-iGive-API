@@ -1,17 +1,17 @@
-//multer import and config
-import multer from "multer";
+// //multer import and config
+// import multer from "multer";
 
-import Datauri from "datauri";
+// import Datauri from "datauri";
 
-import path from "path";
+// import path from "path";
 
-const storage = multer.memoryStorage();
-const uploadAvatar = multer({ storage }).single("avatar");
-const uploadItemImage = multer({ storage }).single("item_image");
+// const storage = multer.memoryStorage();
+// const uploadAvatar = multer({ storage }).single("avatar");
+// const uploadItemImage = multer({ storage }).single("item_image");
 
-const dUri = new Datauri();
+// const dUri = new Datauri();
 
-const dataUri = async (req) =>
-	await dUri.format(path.extname(req.file).toString(), req.file.buffer);
+// const dataUri = async (req) =>
+// 	await dUri.format(path.extname(req.file).toString(), req.file.buffer);
 
-export { uploadAvatar, uploadItemImage, dataUri };
+// export { uploadAvatar, uploadItemImage, dataUri };

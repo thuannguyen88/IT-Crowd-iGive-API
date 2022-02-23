@@ -1,5 +1,5 @@
 import express from "express";
-import { uploadAvatar, dataUri } from "../multer/index.js";
+// import { uploadAvatar, dataUri } from "../multer/index.js";
 import { uploader } from "../config.js";
 
 import {
@@ -66,36 +66,17 @@ usersRouter.get("/:id", async (req, res) => {
 // });
 
 /* CREATE new user */
-usersRouter.post("/", uploadAvatar, async (req, res) => {
+usersRouter.post("/", async (req, res) => {
 	// res.json(result);
 
-	if (req.file) {
-		const file = dataUri(req).content;
-		return uploader
-			.upload(file)
-			.then((result) => {
-				const avatar = result.url;
-				const cloudinary_id = result.public_id;
-				return res.status(200).json({
-					messge: "Your image has been uploded successfully to cloudinary",
-					data: {
-						avatar,
-						cloudinary_id,
-					},
-				});
-			})
-			.catch((err) =>
-				res.status(400).json({
-					messge: "someting went wrong while processing your request",
-					data: {
-						err,
-					},
-				})
-			);
-	}
+	const { image } = req.body.image;
 
 	const { first_name, last_name, email, address, is_active, user_bio } =
-		req.body;
+		req.body.data;
+
+	const result = await uploader.upload(image);
+	const avatar = result.secure_url;
+	const cloudinary_id = result.public_id;
 
 	const newUser = await createUser(
 		first_name,
@@ -119,7 +100,7 @@ usersRouter.delete("/:id", async (req, res) => {
 	// res.send("user deleted");
 	//get the user whose image we want to delete from cloudinary
 	const user = await getUserById(id);
-	await cloudinary.uploader.destroy(user.cloudinary_id);
+	await uploader.destroy(user.cloudinary_id);
 
 	const id = Number(req.params.id);
 	const deletedUser = await deleteUser(id);
