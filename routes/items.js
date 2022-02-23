@@ -1,5 +1,5 @@
 import express from "express";
-import upload from "../multer/index.js";
+import { upload } from "../multer/index.js";
 import {
 	getAllItems,
 	getAllItemsParticularUser,
