@@ -23,6 +23,6 @@ const cloudinaryConfig = config({
 	secure: true,
 });
 
-export { uploader };
+export { uploader, cloudinaryConfig };
 
 console.log(cloudinaryConfig);
