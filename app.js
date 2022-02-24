@@ -1,4 +1,3 @@
-const app = express();
 import express from "express";
 import path from "path";
 import __dirname from "./dirname.js";
@@ -10,6 +9,7 @@ import usersRouter from "./routes/users.js";
 import itemsRouter from "./routes/items.js";
 import listingsRouter from "./routes/listings.js";
 
+const app = express();
 app.use(cors());
 app.use("/api/users", usersRouter);
 app.use("/api/items", itemsRouter);
