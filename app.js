@@ -18,16 +18,15 @@ app.use("/api/listings", listingsRouter);
 import fileUpload from "express-fileupload";
 app.use(fileUpload());
 
-app.use(logger("dev"));
-
-app.use(express.urlencoded({ extended: false }));
-
 //below is the limit on file size (body-Parser) for files sent from client to server
 app.use(
 	express.json({
 		limit: "20mb",
 	})
 );
+
+app.use(logger("dev"));
+app.use(express.urlencoded({ extended: false }));
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
