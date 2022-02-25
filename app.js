@@ -10,9 +10,6 @@ import listingsRouter from "./routes/listings.js";
 
 const app = express();
 app.use(cors());
-app.use("/api/users", usersRouter);
-app.use("/api/items", itemsRouter);
-app.use("/api/listings", listingsRouter);
 
 //below is the limit on file size (body-Parser) for files sent from client to server
 app.use(
@@ -20,6 +17,9 @@ app.use(
 		limit: "20mb",
 	})
 );
+app.use("/api/users", usersRouter);
+app.use("/api/items", itemsRouter);
+app.use("/api/listings", listingsRouter);
 
 app.use(logger("dev"));
 app.use(express.urlencoded({ extended: false }));
