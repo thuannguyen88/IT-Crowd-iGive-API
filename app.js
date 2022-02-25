@@ -15,6 +15,9 @@ app.use("/api/users", usersRouter);
 app.use("/api/items", itemsRouter);
 app.use("/api/listings", listingsRouter);
 
+import fileUpload from "express-fileupload";
+app.use(fileUpload());
+
 app.use(logger("dev"));
 app.use(express.urlencoded({ extended: false }));
 
