@@ -67,20 +67,11 @@ usersRouter.get("/:id", async (req, res) => {
 /* CREATE new user */
 usersRouter.post("/", async (req, res) => {
 	//extract the data from the register user form on client , sent via req.body
-	try {
-		const {
-			first_name,
-			last_name,
-			email,
-			address,
-			image,
-			is_active,
-			user_bio,
-		} = req.body;
-		console.log(req.body);
-	} catch (error) {
-		console.log(error);
-	}
+
+	// const { first_name, last_name, email, address, image, is_active, user_bio } =
+	// 	req.body;
+
+	console.log(req.body);
 
 	//some variables are unavailable unless scoped outside the try block
 	let result;

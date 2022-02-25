@@ -19,6 +19,7 @@ import fileUpload from "express-fileupload";
 app.use(fileUpload());
 
 app.use(logger("dev"));
+
 app.use(express.urlencoded({ extended: false }));
 
 //below is the limit on file size (body-Parser) for files sent from client to server
