@@ -68,8 +68,8 @@ usersRouter.get("/:id", async (req, res) => {
 usersRouter.post("/", async (req, res) => {
 	//extract the data from the register user form on client , sent via req.body
 
-	// const { first_name, last_name, email, address, image, is_active, user_bio } =
-	// 	req.body;
+	const { first_name, last_name, email, address, image, is_active, user_bio } =
+		req.body;
 
 	console.log(req.body);
 
