@@ -116,10 +116,11 @@ usersRouter.post("/", async (req, res) => {
 /* DELETE specific user */
 usersRouter.delete("/:id", async (req, res) => {
 	const id = Number(req.params.id);
-	const deletedUser = await deleteUser(id);
 	//also delete cloudinary id of the user we want to delete
 	const user = await getUserById(id);
 	await uploader.destroy(user.cloudinary_id);
+
+	const deletedUser = await deleteUser(id);
 
 	res.json({
 		message: `user successfully deleted`,
