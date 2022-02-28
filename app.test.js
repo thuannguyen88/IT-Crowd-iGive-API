@@ -26,12 +26,17 @@ describe("GET /", function () {
     const actual = await request(app).get("/");
     expect(actual.body).toStrictEqual(expectedResponse);
   });
+
+  
 });
 
+
+
 // describe("GET /api/users", function () {
-//   test("should respond with a 200 OK success status code", async function () {
-//     const actual = await request(app).get("/");
-//     console.log(actual);
-//     expect(actual.status).toBe(200);
+//   test("gives us back 200 OK success status code", async function () {
+//     const actual = await request(app).get("/api/users");
+
+//     // expect(actual.send).toStrictEqual(expectedSend);
+//     expect(actual.statusCode).toBe(200);
 //   });
 // });
