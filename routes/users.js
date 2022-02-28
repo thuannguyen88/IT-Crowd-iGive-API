@@ -67,8 +67,6 @@ usersRouter.get("/:id", async (req, res) => {
 /* CREATE new user */
 usersRouter.post("/", async (req, res) => {
 	//extract the data from the register user form on client , sent via req.body
-
-	console.log(req.body);
 	const { first_name, last_name, email, address, image, is_active, user_bio } =
 		req.body;
 
@@ -118,11 +116,13 @@ usersRouter.post("/", async (req, res) => {
 /* DELETE specific user */
 usersRouter.delete("/:id", async (req, res) => {
 	const id = Number(req.params.id);
-	const deletedUser = await deleteUser(id);
+	
 	//also delete cloudinary id of the user we want to delete
 	const user = await getUserById(id);
 	await uploader.destroy(user.cloudinary_id);
 
+	const deletedUser = await deleteUser(id);
+	
 	res.json({
 		message: `user successfully deleted`,
 		success: true,
