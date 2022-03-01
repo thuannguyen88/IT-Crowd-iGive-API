@@ -26,14 +26,16 @@ const usersRouter = express.Router();
 usersRouter.get("/", async (req, res) => {
   // res.send("get all users");
 
-  const users = await getAllUsers();
-  console.log(users);
 
-  res.json({
-    message: `all users`,
-    success: true,
-    payload: users,
-  });
+	const users = await getAllUsers();
+	console.log(users);
+
+	res.json({
+		message: `all users`,
+		success: true,
+		payload: users,
+	});
+
 });
 
 /* GET specific user by ID */
@@ -121,7 +123,11 @@ usersRouter.delete("/:id", async (req, res) => {
 	//also delete cloudinary id of the user we want to delete
 	try {
 		const user = await getUserById(id);
-		user.avatar ? await uploader.destroy(user.avatar) : null;
+		user.cloudinary_id
+			? await uploader.destroy(user.cloudinary_id, (error, result) =>
+					console.log(result)
+			  )
+			: null;
 	} catch (error) {
 		console.log("unable to delete cloudinary id", error);
 	}
