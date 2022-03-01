@@ -53,6 +53,7 @@ itemsRouter.get("/:id", async (req, res) => {
 /* CREATE an item */
 itemsRouter.post("/", async (req, res) => {
 	//extract the data from the register user form on client , sent via req.body
+
 	const {
 		user_id,
 		category,
@@ -62,6 +63,7 @@ itemsRouter.post("/", async (req, res) => {
 		date_added,
 		quantity,
 		is_reserved,
+		availability,
 		time_slot,
 		image,
 	} = req.body;
@@ -95,10 +97,11 @@ itemsRouter.post("/", async (req, res) => {
 			use_by_date,
 			date_added,
 			quantity,
-			is_reserved,
-			time_slot,
 			cloudinary_id,
-			item_image
+			item_image,
+			is_reserved,
+			availability,
+			time_slot
 		);
 	} catch (error) {
 		console.log("create newItem failed", error);

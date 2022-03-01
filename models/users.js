@@ -14,12 +14,6 @@ export async function getUserById(id) {
 	return data.rows;
 }
 
-// fetch the ITEM by ID from items table
-export async function getItemById(id) {
-	const data = await query(`SELECT * FROM items WHERE id=$1;`, [id]);
-	return data.rows;
-}
-
 // fetch the USER by EMAIL from an users table ***
 // export async function getUserByEmail( email ) {
 // 	const data = await query(`SELECT * FROM users WHERE email=$1;`, [ email ]);
@@ -143,6 +137,12 @@ INNER JOIN items
 //fetch all ITEMS from a items table
 export async function getAllItems() {
 	const data = await query(`SELECT * FROM items;`);
+	return data.rows;
+}
+
+// fetch the ITEM by ID from items table
+export async function getItemById(id) {
+	const data = await query(`SELECT * FROM items WHERE id=$1;`, [id]);
 	return data.rows;
 }
 
