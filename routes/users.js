@@ -69,51 +69,55 @@ usersRouter.get("/:id", async (req, res) => {
 
 /* CREATE new user */
 usersRouter.post("/", async (req, res) => {
-  //extract the data from the register user form on client , sent via req.body
-  const { first_name, last_name, email, address, image, is_active, user_bio } =
-    req.body;
 
-  //some variables are unavailable unless scoped outside the try block
-  let result;
+	//extract the data from the register user form on client , sent via req.body
+	const { first_name, last_name, email, address, image, is_active, user_bio } =
+		req.body;
 
-  try {
-    //cloudinary uploader passed image which is a base 64 encoded image
-    result = await uploader.upload(image);
-  } catch (error) {
-    //if this fails, let the client know
-    console.log("upload failed", error);
-    //bad practice to return like this but ok for development
-    return;
-  }
-  //cloudinary returned us an object which we saved as const result
-  //we store the image url property as avatar
-  //we store the public_id of that image as unique cloudinary_id
-  const avatar = result.secure_url;
-  const cloudinary_id = result.public_id;
+	//some variables are unavailable unless scoped outside the try block
+	let result;
 
-  //insert these values into the users table
-  let newUser;
-  try {
-    newUser = await createUser(
-      first_name,
-      last_name,
-      email,
-      address,
-      is_active,
-      cloudinary_id,
-      avatar,
-      user_bio
-    );
-  } catch (error) {
-    console.log("create newUser failed", error);
-    return;
-  }
+	try {
+		//cloudinary uploader passed image which is a base 64 encoded image
+		result = await uploader.upload(image);
+	} catch (error) {
+		//if this fails, let the client know
+		console.log("upload failed", error);
+		//bad practice to return like this but ok for development
+		return;
+	}
+	//cloudinary returned us an object which we saved as const result
+	//we store the image url property as avatar
+	//we store the public_id of that image as unique cloudinary_id
+	const avatar = result.secure_url;
+	const cloudinary_id = result.public_id;
+	console.log("avatar:", avatar);
+	console.log("cloudinary_id:", cloudinary_id);
 
-  res.json({
-    message: `user created successfully`,
-    success: true,
-    payload: newUser,
-  });
+	//insert these values into the users table
+	let newUser;
+	try {
+		newUser = await createUser(
+			first_name,
+			last_name,
+			email,
+			address,
+			is_active,
+			cloudinary_id,
+			avatar,
+			user_bio
+		);
+	} catch (error) {
+		console.log("create newUser failed", error);
+		return;
+	}
+
+	res.json({
+		message: `user created successfully`,
+		success: true,
+		payload: newUser,
+	});
+
 });
 
 /* DELETE specific user */
@@ -123,6 +127,7 @@ usersRouter.delete("/:id", async (req, res) => {
 	//also delete cloudinary id of the user we want to delete
 	try {
 		const user = await getUserById(id);
+
 		user.cloudinary_id
 			? await uploader.destroy(user.cloudinary_id, (error, result) =>
 					console.log(result)

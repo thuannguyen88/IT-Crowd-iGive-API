@@ -85,6 +85,8 @@ itemsRouter.post("/", async (req, res) => {
 	//we store the public_id of that image as unique cloudinary_id
 	const item_image = result.secure_url;
 	const cloudinary_id = result.public_id;
+	console.log("item_image:", item_image);
+	console.log("cloudinary_id:", cloudinary_id);
 
 	//insert these values into the users table
 	let newItem;
@@ -122,7 +124,7 @@ itemsRouter.delete("/:id", async (req, res) => {
 	try {
 		const item = await getItemById(id);
 		item.cloudinary_id
-			? await uploader.destroy(item.cloudinary_id, (error, result) =>
+			? await uploader.destroy(item.payload.cloudinary_id, (error, result) =>
 					console.log(result)
 			  )
 			: null;
@@ -133,7 +135,7 @@ itemsRouter.delete("/:id", async (req, res) => {
 	const deletedItem = await deleteAGiveAwayItem(id);
 
 	res.json({
-		message: `user successfully deleted`,
+		message: `item successfully deleted`,
 		success: true,
 		payload: deletedItem,
 	});
