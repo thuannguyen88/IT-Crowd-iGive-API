@@ -22,8 +22,7 @@ export async function getUserById(id) {
 
 // create a new USER registration in an users table
 export async function createUser(
-	first_name,
-	last_name,
+	full_name,
 	email,
 	address,
 	is_active,
@@ -32,17 +31,8 @@ export async function createUser(
 	user_bio
 ) {
 	const data = await query(
-		`INSERT INTO users ( first_name, last_name, email, address, is_active, cloudinary_id, avatar, user_bio ) VALUES ( $1, $2, $3, $4, $5, $6, $7, $8)  RETURNING *;`,
-		[
-			first_name,
-			last_name,
-			email,
-			address,
-			is_active,
-			cloudinary_id,
-			avatar,
-			user_bio,
-		]
+		`INSERT INTO users ( full_name, email, address, is_active, cloudinary_id, avatar, user_bio ) VALUES ( $1, $2, $3, $4, $5, $6, $7)  RETURNING *;`,
+		[full_name, email, address, is_active, cloudinary_id, avatar, user_bio]
 	);
 	return data.rows;
 }
@@ -50,8 +40,7 @@ export async function createUser(
 // update an existing USER registration parameters in an users table
 export async function updateUser(
 	id,
-	first_name,
-	last_name,
+	full_name,
 	email,
 	address,
 	is_active,
@@ -60,18 +49,8 @@ export async function updateUser(
 	user_bio
 ) {
 	const data = await query(
-		`UPDATE users SET first_name=$2, last_name=$3, email=$4, address=$5, is_active=$6, cloudinary_id=$7, avatar=$8, user_bio=$9 WHERE id=$1 RETURNING *;`,
-		[
-			id,
-			first_name,
-			last_name,
-			email,
-			address,
-			is_active,
-			cloudinary_id,
-			avatar,
-			user_bio,
-		]
+		`UPDATE users SET full_name=$2, email=$3, address=$4, is_active=$5, cloudinary_id=$6, avatar=$7, user_bio=$8 WHERE id=$1 RETURNING *;`,
+		[id, full_name, email, address, is_active, cloudinary_id, avatar, user_bio]
 	);
 	return data.rows;
 }
@@ -181,7 +160,7 @@ export async function createAGiveAwayItem(
 			item_image,
 			is_reserved,
 			availability,
-			time_slot
+			time_slot,
 		]
 	);
 	return data.rows;
