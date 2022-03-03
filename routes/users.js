@@ -129,7 +129,7 @@ usersRouter.delete("/:id", async (req, res) => {
 		const user = await getUserById(id);
 
 		user.cloudinary_id
-			? await uploader.destroy(user.cloudinary_id, (error, result) =>
+			? await uploader.destroy(user.payload.cloudinary_id, (error, result) =>
 					console.log(result)
 			  )
 			: null;
