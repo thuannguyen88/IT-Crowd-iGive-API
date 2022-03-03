@@ -88,6 +88,8 @@ usersRouter.post("/", async (req, res) => {
 	//we store the public_id of that image as unique cloudinary_id
 	const avatar = result.secure_url;
 	const cloudinary_id = result.public_id;
+	console.log("avatar:", avatar);
+	console.log("cloudinary_id:", cloudinary_id);
 
 	//insert these values into the users table
 	let newUser;
@@ -120,6 +122,7 @@ usersRouter.delete("/:id", async (req, res) => {
 	//also delete cloudinary id of the user we want to delete
 	try {
 		const user = await getUserById(id);
+
 		user.cloudinary_id
 			? await uploader.destroy(user.cloudinary_id, (error, result) =>
 					console.log(result)
