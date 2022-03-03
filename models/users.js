@@ -142,7 +142,7 @@ export async function getAllItems() {
 
 // fetch the ITEM by ID from items table
 export async function getItemById(id) {
-	const data = await query(`SELECT * FROM items WHERE id=$1;`, [id]);
+	const data = await query(`SELECT * FROM items WHERE item_id=$1;`, [id]);
 	return data.rows;
 }
 
