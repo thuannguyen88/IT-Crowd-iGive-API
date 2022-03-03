@@ -26,16 +26,14 @@ const usersRouter = express.Router();
 usersRouter.get("/", async (req, res) => {
   // res.send("get all users");
 
+  const users = await getAllUsers();
+  // console.log(users);
 
-	const users = await getAllUsers();
-	// console.log(users);
-
-	res.json({
-		message: `all users`,
-		success: true,
-		payload: users,
-	});
-
+  res.json({
+    message: `all users`,
+    success: true,
+    payload: users,
+  });
 });
 
 /* GET specific user by ID */
@@ -68,7 +66,7 @@ usersRouter.get("/:id", async (req, res) => {
 // });
 
 /* CREATE new user */
-usersRouter.post("/", async (req, res) => {
+usersRouter.post("/", async (req, res, next) => {
   //extract the data from the register user form on client , sent via req.body
   const { first_name, last_name, email, address, image, is_active, user_bio } =
     req.body;
@@ -83,6 +81,9 @@ usersRouter.post("/", async (req, res) => {
     //if this fails, let the client know
     console.log("upload failed", error);
     //bad practice to return like this but ok for development
+
+
+    // instead of return(we don't want this for our mvp), set up error hadling in express(check docks)
     return;
   }
   //cloudinary returned us an object which we saved as const result
@@ -118,28 +119,26 @@ usersRouter.post("/", async (req, res) => {
 
 /* DELETE specific user */
 usersRouter.delete("/:id", async (req, res) => {
+  const id = Number(req.params.id);
+  //also delete cloudinary id of the user we want to delete
+  try {
+    const user = await getUserById(id);
+    user.cloudinary_id
+      ? await uploader.destroy(user.cloudinary_id, (error, result) =>
+          console.log(result)
+        )
+      : null;
+  } catch (error) {
+    console.log("unable to delete cloudinary id", error);
+  }
 
-	const id = Number(req.params.id);
-	//also delete cloudinary id of the user we want to delete
-	try {
-		const user = await getUserById(id);
-		user.cloudinary_id
-			? await uploader.destroy(user.cloudinary_id, (error, result) =>
-					console.log(result)
-			  )
-			: null;
-	} catch (error) {
-		console.log("unable to delete cloudinary id", error);
-	}
+  const deletedUser = await deleteUser(id);
 
-	const deletedUser = await deleteUser(id);
-
-	res.json({
-		message: `user successfully deleted`,
-		success: true,
-		payload: deletedUser,
-	});
-
+  res.json({
+    message: `user successfully deleted`,
+    success: true,
+    payload: deletedUser,
+  });
 });
 
 /* UPDATE specific user */
