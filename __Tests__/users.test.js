@@ -3,6 +3,7 @@ import app from "../app.js";
 import { uploader } from "../config.js";
 import { jest } from "@jest/globals";
 import { users } from "../libs/dummyData.js";
+import { createUser } from "../models/users.js";
 
 //import { dummyData } from "../libs/dummyData.js";
 
@@ -52,73 +53,54 @@ describe("Get /api/users/:id", function () {
 });
 
 // // implementing mock for POST to /api/users
-// describe("Post /api/users", function () {
-//   test("it should give us back 201 CREATED", async function () {
-//     // create a mock upload function for cloudinary
-//     const mockUploader = jest.spyOn(uploader, "upload");
+describe("Post /api/users", function () {
+  // create a mock upload function for cloudinary
+  const mockUpload = jest.spyOn(uploader, "upload");
 
+  beforeEach(() => {
+    mockUpload.mockRestore();
+  });
 
-//     // create a mock function for creating user
-//     const createUser = jest.fn();
+  test("it should upload profile image to cloudinary and then be given a secure_url and public_id which values are then passed on and new user is created", async function () {
+    let secure_url =
+      "https://res.cloudinary.com/dzektczea/image/upload/v1646091226/fgubsl1bw8dekqo94mix.jpg";
+    let public_id = "xnefc68tvb0wu94ewyls";
 
-//     // using dummy image to pass through to upload()
+    mockUpload.mockImplementationOnce((image) => {
+      secure_url, public_id;
+    });
 
-//     // using cloudinary upload(image)
+    const avatar = secure_url;
+    const cloudinary_id = public_id;
 
-//     let secure_url;
-//     let public_id;
+    const newUser = {
+      id: 7,
+      first_name: "Dmitriy",
+      last_name: "Yegorov",
+      email: "yegorovd14@gmail.com",
+      address: "SW",
+      is_active: true,
+      cloudinary_id: public_id,
+      avatar: secure_url,
+      user_bio: "",
+    };
 
-//     const result = await uploader.upload.mockImplementationOnce(() => ({
-//       secure_url:
-//         "https://res.cloudinary.com/dzektczea/image/upload/v1646091226/fgubsl1bw8dekqo94mix.jpg",
-//       public_id: "xnefc68tvb0wu94ewyls",
-//     }));
+    // create a mock function for creating user
+    const mockCreateUser = jest.fn().mockImplementation(() => newUser);
 
-//     const avatar = secure_url;
-//     const cloudinary_id = public_id;
+    //  const actual = await request(app)
+    //    .post("/api/users")
+    //    .expect("Content-Type", /json/)
+    //    .expect(201);
 
-//     //  createUser.mockImplementationOnce(() => ({
-//     //    id: 7,
-//     //    first_name: "Dmitriy",
-//     //    last_name: "Yegorov",
-//     //    email: "yegorovd14@gmail.com",
-//     //    address: "SW",
-//     //    is_active: true,
-//     //    cloudinary_id: "xnefc68tvb0wu94ewyls",
-//     //    avatar:
-//     //      "https://res.cloudinary.com/dzektczea/image/upload/v1646091225/xnefc68tvb0wu94ewyls.jpg",
-//     //    user_bio: "",
-//     //  }));
+    expect(mockCreateUser("pass user properties")).toBe(newUser);
+    expect(mockCreateUser).toHaveBeenLastCalledWith("pass user properties");
 
-//     createUser.mockReset();
-
-//     const actual = await request(app)
-//       .post("/api/users")
-//       .expect("Content-Type", /json/)
-//       .expect(200);
-
-//     // should be givine us a 201 but is giving a 200
-//     // it shouldnt be creating a new entry into database
-
-//     //  const actual = await request(app).post("/api/users").send({
-//     //    first_name: "Graham",
-//     //    last_name: "Delbeck",
-//     //    email: "graham.delbeck@gmail.com",
-//     //    address: "Main Street, LA22 9BU, Ambleside, United Kingdom",
-//     //    //   image: `${image}`,
-//     //    is_active: true,
-//     //    cloudinary_id: cloudinary_id,
-//     //    avatar: avatar,
-//     //    user_bio: "hello I'm another Graham",
-//     //  });
-
-//     //  expect(actual).;
-
-//     //     // test("It should expect a json and a success create status code of 201")
-//     //     // .expect("Content-Type", /json/)
-
-//     //     // test("it should upload image successfully to cloudinary")
-//     //     // test("it should create new user")
-//     //     // test("It should respond with an object containing; message, success and payload ")
-//   });
-// });
+    //     // test("It should expect a json and a success create status code of 201")
+    //     // .expect("Content-Type", /json/)
+    //     // test("it should upload image successfully to cloudinary")
+    //     // test("it should create new user")
+    //     // test("It should respond with an object containing; message, success and payload ")
+    mockCreateUser.mockReset();
+  });
+});

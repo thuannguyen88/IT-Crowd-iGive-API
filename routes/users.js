@@ -28,7 +28,7 @@ usersRouter.get("/", async (req, res) => {
 
 
 	const users = await getAllUsers();
-	console.log(users);
+	// console.log(users);
 
 	res.json({
 		message: `all users`,

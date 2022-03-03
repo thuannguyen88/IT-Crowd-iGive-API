@@ -49,19 +49,16 @@ describe("Get /api/items/:id", function () {
 
 // DELETE test to /api/items/:id
 describe("Delete /api/items/:id", function () {
-  // test("it should give us back 200 SUCCESS", async function () {
-  //   const actual = await request(app)
-  //     .delete(`/api/items/${id}`)
-  //     .expect("Content-Type", /json/)
-  //     .expect(200);
-  // });
+  const mockDestroy = jest.spyOn(uploader, "destroy");
 
-  test("it should give us back an object containning message, success, payload", async function () {
-    const id = 5;
+  beforeEach(() => {
+    mockDestroy.mockReset();
+  });
 
-    // const mockDestroy = jest.spyOn(uploader, "destroy");
+  test("it should give us back an object containing message, success, payload", async function () {
+    let id = 1;
 
-    // mockDestroy.mockReturnValue();
+    mockDestroy.mockImplementation((cloudinary_id) => `item image deleted`);
 
     const actual = await request(app)
       .delete(`/api/items/${id}`)
@@ -75,6 +72,7 @@ describe("Delete /api/items/:id", function () {
         payload: expect.any(Array),
       })
     );
+    mockDestroy.mockRestore();
   });
 
   // test("it should give us back an object containing message, success, payload", async function () {
