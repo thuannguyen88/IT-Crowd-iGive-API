@@ -1,11 +1,60 @@
 import request from "supertest";
 import app from "../app.js";
-import { uploader } from "../config.js";
 import { jest } from "@jest/globals";
 import { pool } from "../db/connection.js";
-import { createUser } from "../models/users.js";
+import {
+  testUsers,
+  testItems,
+  userOne,
+  userTwo,
+  userThree,
+} from "../libs/testData.js";
+import { uploader } from "../config.js";
 
-// GET test to /api/users
+//ARRANGE, ACT, ASSERT
+
+// set up expected payload
+const expected = [
+  {
+    id: 1,
+    first_name: "Dmitriy",
+    last_name: "Yegorov",
+    email: "yegorovd14@gmail.com",
+    address: "SW",
+    is_active: true,
+    cloudinary_id: "xnefc68tvb0wu94ewyls",
+    avatar:
+      "https://res.cloudinary.com/dzektczea/image/upload/v1646091225/xnefc68tvb0wu94ewyls.jpg",
+    user_bio: "",
+  },
+  {
+    id: 2,
+    first_name: "Rory",
+    last_name: "Maguire",
+    email: "rorymaguire00@gmail.com",
+    address: "B15 3",
+    is_active: true,
+    cloudinary_id: "x4ew1w1opn7nknxqvbt8",
+    avatar:
+      "https://res.cloudinary.com/dzektczea/image/upload/v1646158131/x4ew1w1opn7nknxqvbt8.jpg",
+    user_bio: "hello i am a young boy",
+  },
+  {
+    id: 3,
+    first_name: "Jordan",
+    last_name: "Linton",
+    email: "jordan@schoolofcode.co.uk",
+    address: "School of Code HQ",
+    is_active: true,
+    cloudinary_id: "wwqafj5ysxqyfhw8j3n1",
+    avatar:
+      "https://res.cloudinary.com/dzektczea/image/upload/v1646162115/wwqafj5ysxqyfhw8j3n1.png",
+    user_bio:
+      "Awesome coach at the school of code fffsafjkadsf ljkdasfh sadf sa",
+  },
+];
+
+// GET to /api/users
 describe("GET /api/users", function () {
   // mock pool.query
   const mockPoolQuery = jest.spyOn(pool, "query");
@@ -16,66 +65,83 @@ describe("GET /api/users", function () {
 
   test("it should give us back 200 SUCCESS", async function () {
     // specify return so doesnt speak to database
-    const data = mockPoolQuery.mockResolvedValueOnce({
-      rows: [
-        {
-          id: 25,
-          first_name: "Jane",
-          last_name: "Wilkins",
-          email: "jane.wilkins@gmail.com",
-          address: "Main Street, LA22 9BU, Ambleside, United Kingdom",
-          is_active: false,
-          cloudinary_id: "",
-          avatar:
-            "https://cdn.vox-cdn.com/thumbor/00awoM5IS2kFITs9546UyMSePBY=/0x0:2370x1574/1200x800/filters:focal(996x598:1374x976)/cdn.vox-cdn.com/uploads/chorus_image/image/69715362/Screen_Shot_2020_07_21_at_9.38.25_AM.0.png",
-          user_bio: "hello I'm Jane, i like food",
-        },
-      ],
+    mockPoolQuery.mockResolvedValueOnce({
+      rows: testUsers,
     });
 
     const actual = await request(app)
       .get("/api/users")
       .expect("Content-Type", /json/)
       .expect(200);
-
-    expect(actual.body.payload).toEqual([
-      {
-        id: 25,
-        first_name: "Jane",
-        last_name: "Wilkins",
-        email: "jane.wilkins@gmail.com",
-        address: "Main Street, LA22 9BU, Ambleside, United Kingdom",
-        is_active: false,
-        cloudinary_id: "",
-        avatar:
-          "https://cdn.vox-cdn.com/thumbor/00awoM5IS2kFITs9546UyMSePBY=/0x0:2370x1574/1200x800/filters:focal(996x598:1374x976)/cdn.vox-cdn.com/uploads/chorus_image/image/69715362/Screen_Shot_2020_07_21_at_9.38.25_AM.0.png",
-        user_bio: "hello I'm Jane, i like food",
-      },
-    ]);
   });
 
-  //   test("it should give us back an object with keys; message, success, payload", async function () {
-  //     const actual = await request(app).get("/api/users");
-  //     expect(actual.body).toEqual(
-  //       expect.objectContaining({
-  //         message: expect.any(String),
-  //         success: expect.any(Boolean),
-  //         payload: expect.any(Array),
-  //       })
-  //     );
-  //   });
+  test("it should give us all users from database", async function () {
+    // specify return so doesnt speak to database
+    mockPoolQuery.mockResolvedValueOnce({
+      rows: testUsers,
+    });
+
+    const actual = await request(app).get("/api/users");
+
+    expect(actual.body.payload).toEqual(expected);
+  });
+
+  test("it should give us response object containing properties (message, success and payload)", async function () {
+    // specify return so doesnt speak to database
+    mockPoolQuery.mockResolvedValueOnce({
+      rows: testUsers,
+    });
+
+    const expectedResponse = {
+      message: "all users",
+      success: true,
+      payload: testUsers,
+    };
+
+    const actual = await request(app).get("/api/users");
+
+    expect(actual.body).toEqual(expectedResponse);
+  });
 });
 
-// // GET test to /api/users/:id
-// describe("Get /api/users/:id", function () {
-//   const id = 1;
-//   test("it should give us back 200 SUCCESS", async function () {
-//     const actual = await request(app)
-//       .get(`/api/users/${id}`)
-//       .expect("Content-Type", /json/)
-//       .expect(200);
-//   });
+// GET to /api/users/:id
+describe("Get /api/users/:id", function () {
+  // mock pool.query
+  const mockPoolQuery = jest.spyOn(pool, "query");
 
+  beforeEach(() => {
+    mockPoolQuery.mockClear();
+  });
+
+  const id = [1, 2, 3];
+
+  test(`it should give us back 200 SUCCESS`, async function () {
+    // specify return so doesnt speak to database
+    mockPoolQuery.mockResolvedValue({
+      rows: testUsers,
+    });
+
+    const actual = await request(app)
+      .get(`/api/users/1`)
+      .expect("Content-Type", /json/)
+      .expect(200);
+  });
+
+  for (let i = 0; i < id.length; i++) {
+    test(`params id ${id[i]} should give us user with id ${id[i]}`, async function () {
+      // specify return so doesnt speak to database
+      mockPoolQuery.mockClear();
+
+      mockPoolQuery.mockResolvedValue({
+        rows: testUsers[i],
+      });
+
+      const actual = await request(app).get(`/api/users/${id[i]}`);
+      expect(actual.body.payload).toEqual(expected[i]);
+      // console.log("testusers[i]", testUsers[i], actual.body.payload);
+    });
+  }
+});
 //   test("it should give us back an object with keys; message, success, payload", async function () {
 //     const actual = await request(app).get(`/api/users/${id}`);
 //     expect(actual.body).toEqual(
