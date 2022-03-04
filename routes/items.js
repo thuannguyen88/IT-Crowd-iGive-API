@@ -57,91 +57,97 @@ itemsRouter.get("/:id", async (req, res) => {
 
 /* CREATE an item */
 itemsRouter.post("/", async (req, res) => {
-  //extract the data from the register user form on client , sent via req.body
 
-  const {
-    user_id,
-    category,
-    item_name,
-    item_description,
-    use_by_date,
-    date_added,
-    quantity,
-    is_reserved,
-    availability,
-    time_slot,
-    image,
-  } = req.body;
+	//extract the data from the register user form on client , sent via req.body
 
-  //some variables are unavailable unless scoped outside the try block
-  let result;
+	const {
+		user_id,
+		category,
+		item_name,
+		item_description,
+		use_by_date,
+		date_added,
+		quantity,
+		is_reserved,
+		availability,
+		time_slot,
+		image,
+	} = req.body;
 
-  try {
-    //cloudinary uploader passed image which is a base 64 encoded image
-    result = await uploader.upload(image);
-  } catch (error) {
-    //if this fails, let the client know
-    console.log("upload failed", error);
-    //bad practice to return like this but ok for development
-    return;
-  }
-  //cloudinary returned us an object which we saved as const result
-  //we store the image url property as avatar
-  //we store the public_id of that image as unique cloudinary_id
-  const item_image = result.secure_url;
-  const cloudinary_id = result.public_id;
+	//some variables are unavailable unless scoped outside the try block
+	let result;
 
-  //insert these values into the users table
-  let newItem;
-  try {
-    newItem = await createAGiveAwayItem(
-      user_id,
-      category,
-      item_name,
-      item_description,
-      use_by_date,
-      date_added,
-      quantity,
-      cloudinary_id,
-      item_image,
-      is_reserved,
-      availability,
-      time_slot
-    );
-  } catch (error) {
-    console.log("create newItem failed", error);
-    return;
-  }
+	try {
+		//cloudinary uploader passed image which is a base 64 encoded image
+		result = await uploader.upload(image);
+	} catch (error) {
+		//if this fails, let the client know
+		console.log("upload failed", error);
+		//bad practice to return like this but ok for development
+		return;
+	}
+	//cloudinary returned us an object which we saved as const result
+	//we store the image url property as avatar
+	//we store the public_id of that image as unique cloudinary_id
+	const item_image = result.secure_url;
+	const cloudinary_id = result.public_id;
+	console.log("item_image:", item_image);
+	console.log("cloudinary_id:", cloudinary_id);
 
-  res.json({
-    message: `item created successfully`,
-    success: true,
-    payload: newItem,
-  });
+	//insert these values into the users table
+	let newItem;
+	try {
+		newItem = await createAGiveAwayItem(
+			user_id,
+			category,
+			item_name,
+			item_description,
+			use_by_date,
+			date_added,
+			quantity,
+			cloudinary_id,
+			item_image,
+			is_reserved,
+			availability,
+			time_slot
+		);
+	} catch (error) {
+		console.log("create newItem failed", error);
+		return;
+	}
+
+	res.json({
+		message: `item created successfully`,
+		success: true,
+		payload: newItem,
+	});
+
 });
 
 /* DELETE specific item */
 itemsRouter.delete("/:id", async (req, res) => {
-  const id = Number(req.params.id);
-  //also delete cloudinary id of the user we want to delete
-  try {
-    const item = await getItemById(id);
-    item.cloudinary_id
-      ? await uploader.destroy(item.cloudinary_id, (error, result) =>
-          console.log(result)
-        )
-      : null;
-  } catch (error) {
-    console.log("unable to delete cloudinary id", error);
-  }
 
-  const deletedItem = await deleteAGiveAwayItem(id);
+	const id = Number(req.params.id);
+	//also delete cloudinary id of the user we want to delete
+	try {
+		const item = await getItemById(id);
+		item.cloudinary_id
+			? await uploader.destroy(item.payload.cloudinary_id, (error, result) =>
+					console.log(result)
+			  )
+			: null;
+	} catch (error) {
+		console.log("unable to delete cloudinary id", error);
+	}
 
-  res.json({
-    message: `user successfully deleted`,
-    success: true,
-    payload: deletedItem,
-  });
+	const deletedItem = await deleteAGiveAwayItem(id);
+
+	res.json({
+		message: `item successfully deleted`,
+		success: true,
+		payload: deletedItem,
+	});
+
 });
 
 // /* DELETE all items of a particular USER */
