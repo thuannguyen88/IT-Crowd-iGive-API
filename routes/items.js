@@ -1,14 +1,14 @@
 import express from "express";
 // import { uploadItemImage } from "../multer/index.js";
 import {
-	getItemById,
-	getAllItems,
-	getAllItemsParticularUser,
-	createAGiveAwayItem,
-	updateAGiveAwayItem,
-	deleteAGiveAwayItem,
-	deleteAllItemsOfParticularUser,
-	updateIsReservedStatus,
+  getItemById,
+  getAllItems,
+  getAllItemsParticularUser,
+  createAGiveAwayItem,
+  updateAGiveAwayItem,
+  deleteAGiveAwayItem,
+  deleteAllItemsOfParticularUser,
+  updateIsReservedStatus,
 } from "../models/users.js";
 
 import { uploader } from "../config.js";
@@ -25,33 +25,39 @@ const itemsRouter = express.Router();
 
 /* GET all items */
 itemsRouter.get("/", async (req, res) => {
-	//   res.send("get all items");
+  //   res.send("get all items");
 
-	const items = await getAllItems();
+  const items = await getAllItems();
 
-	res.json({
-		message: `all items`,
-		success: true,
-		payload: items,
-	});
+  //   res.json({
+  //     message: `all items`,
+  //     success: true,
+  //     payload: items,
+  //   });
+  res.json({
+    message: `all items`,
+    success: true,
+    payload: items,
+  });
 });
 
 /* GET specific item */
 itemsRouter.get("/:id", async (req, res) => {
-	//   res.send("get all items for specific user");
+  //   res.send("get all items for specific user");
 
-	const id = Number(req.params.id);
-	const requestedItems = await getAllItemsParticularUser(id);
+  const id = Number(req.params.id);
+  const requestedItems = await getAllItemsParticularUser(id);
 
-	res.json({
-		message: `found all items for user with id ${id}`,
-		success: true,
-		payload: requestedItems,
-	});
+  res.json({
+    message: `found all items for user with id ${id}`,
+    success: true,
+    payload: requestedItems,
+  });
 });
 
 /* CREATE an item */
 itemsRouter.post("/", async (req, res) => {
+
 	//extract the data from the register user form on client , sent via req.body
 
 	const {
@@ -115,10 +121,12 @@ itemsRouter.post("/", async (req, res) => {
 		success: true,
 		payload: newItem,
 	});
+
 });
 
 /* DELETE specific item */
 itemsRouter.delete("/:id", async (req, res) => {
+
 	const id = Number(req.params.id);
 	//also delete cloudinary id of the user we want to delete
 	try {
@@ -139,6 +147,7 @@ itemsRouter.delete("/:id", async (req, res) => {
 		success: true,
 		payload: deletedItem,
 	});
+
 });
 
 // /* DELETE all items of a particular USER */
@@ -167,58 +176,58 @@ itemsRouter.delete("/:id", async (req, res) => {
 
 /* UPDATE specific item */
 itemsRouter.put("/:id", async (req, res) => {
-	//   res.send("item details updated successfully");
+  //   res.send("item details updated successfully");
 
-	const item_id = Number(req.params.id);
-	const {
-		user_id,
-		category,
-		item_name,
-		item_description,
-		use_by_date,
-		date_added,
-		quantity,
-		cloudinary_id,
-		is_reserved,
-		availability,
-		time_slot,
-	} = req.body;
+  const item_id = Number(req.params.id);
+  const {
+    user_id,
+    category,
+    item_name,
+    item_description,
+    use_by_date,
+    date_added,
+    quantity,
+    cloudinary_id,
+    is_reserved,
+    availability,
+    time_slot,
+  } = req.body;
 
-	const updatedItem = await updateAGiveAwayItem(
-		item_id,
-		user_id,
-		category,
-		item_name,
-		item_description,
-		use_by_date,
-		date_added,
-		quantity,
-		cloudinary_id,
-		is_reserved,
-		availability,
-		time_slot
-	);
+  const updatedItem = await updateAGiveAwayItem(
+    item_id,
+    user_id,
+    category,
+    item_name,
+    item_description,
+    use_by_date,
+    date_added,
+    quantity,
+    cloudinary_id,
+    is_reserved,
+    availability,
+    time_slot
+  );
 
-	res.json({
-		message: `item details updated successfully`,
-		success: true,
-		payload: updatedItem,
-	});
+  res.json({
+    message: `item details updated successfully`,
+    success: true,
+    payload: updatedItem,
+  });
 });
 
 itemsRouter.patch("/:id", async (req, res) => {
-	//   res.send("item reserve status updated successfully");
+  //   res.send("item reserve status updated successfully");
 
-	const id = Number(req.params.id);
-	const { is_reserved } = req.body;
+  const id = Number(req.params.id);
+  const { is_reserved } = req.body;
 
-	const itemReserveStatus = await updateIsReservedStatus(id, is_reserved);
+  const itemReserveStatus = await updateIsReservedStatus(id, is_reserved);
 
-	res.json({
-		message: `item reserve status updated successfully`,
-		success: true,
-		payload: itemReserveStatus,
-	});
+  res.json({
+    message: `item reserve status updated successfully`,
+    success: true,
+    payload: itemReserveStatus,
+  });
 });
 
 export default itemsRouter;

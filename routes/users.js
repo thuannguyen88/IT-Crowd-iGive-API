@@ -24,6 +24,7 @@ const usersRouter = express.Router();
 
 /* GET all users */
 usersRouter.get("/", async (req, res) => {
+
 	// res.send("get all users");
 
 	const users = await getAllUsers();
@@ -34,6 +35,7 @@ usersRouter.get("/", async (req, res) => {
 		success: true,
 		payload: users,
 	});
+
 });
 
 /* GET specific user by ID */
@@ -66,6 +68,7 @@ usersRouter.get("/:id", async (req, res) => {
 // });
 
 /* CREATE new user */
+
 usersRouter.post("/", async (req, res) => {
 	//extract the data from the register user form on client , sent via req.body
 	const { full_name, email, address, image, is_active, user_bio } = req.body;
@@ -112,10 +115,12 @@ usersRouter.post("/", async (req, res) => {
 		success: true,
 		payload: newUser,
 	});
+
 });
 
 /* DELETE specific user */
 usersRouter.delete("/:id", async (req, res) => {
+
 	const id = Number(req.params.id);
 	//also delete cloudinary id of the user we want to delete
 	try {
@@ -137,6 +142,7 @@ usersRouter.delete("/:id", async (req, res) => {
 		success: true,
 		payload: deletedUser,
 	});
+
 });
 
 /* UPDATE specific user */
