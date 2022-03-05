@@ -4,55 +4,14 @@ import { jest } from "@jest/globals";
 import { pool } from "../db/connection.js";
 import {
   testUsers,
-  testItems,
-  userOne,
-  userTwo,
-  userThree,
+  newUser,
+  newUserRequestBody,
+  expectedNewUser,
+  expectedUsers,
 } from "../libs/testData.js";
 import { uploader } from "../config.js";
 
 //ARRANGE, ACT, ASSERT
-
-// set up expected payload
-const expected = [
-  {
-    id: 1,
-    first_name: "Dmitriy",
-    last_name: "Yegorov",
-    email: "yegorovd14@gmail.com",
-    address: "SW",
-    is_active: true,
-    cloudinary_id: "xnefc68tvb0wu94ewyls",
-    avatar:
-      "https://res.cloudinary.com/dzektczea/image/upload/v1646091225/xnefc68tvb0wu94ewyls.jpg",
-    user_bio: "",
-  },
-  {
-    id: 2,
-    first_name: "Rory",
-    last_name: "Maguire",
-    email: "rorymaguire00@gmail.com",
-    address: "B15 3",
-    is_active: true,
-    cloudinary_id: "x4ew1w1opn7nknxqvbt8",
-    avatar:
-      "https://res.cloudinary.com/dzektczea/image/upload/v1646158131/x4ew1w1opn7nknxqvbt8.jpg",
-    user_bio: "hello i am a young boy",
-  },
-  {
-    id: 3,
-    first_name: "Jordan",
-    last_name: "Linton",
-    email: "jordan@schoolofcode.co.uk",
-    address: "School of Code HQ",
-    is_active: true,
-    cloudinary_id: "wwqafj5ysxqyfhw8j3n1",
-    avatar:
-      "https://res.cloudinary.com/dzektczea/image/upload/v1646162115/wwqafj5ysxqyfhw8j3n1.png",
-    user_bio:
-      "Awesome coach at the school of code fffsafjkadsf ljkdasfh sadf sa",
-  },
-];
 
 // GET to /api/users
 describe("GET /api/users", function () {
@@ -83,7 +42,7 @@ describe("GET /api/users", function () {
 
     const actual = await request(app).get("/api/users");
 
-    expect(actual.body.payload).toEqual(expected);
+    expect(actual.body.payload).toEqual(expectedUsers);
   });
 
   test("it should give us response object containing properties (message, success and payload)", async function () {
@@ -133,77 +92,114 @@ describe("Get /api/users/:id", function () {
       mockPoolQuery.mockClear();
 
       mockPoolQuery.mockResolvedValue({
-        rows: testUsers[i],
+        rows: [testUsers[i]],
       });
 
       const actual = await request(app).get(`/api/users/${id[i]}`);
-      expect(actual.body.payload).toEqual(expected[i]);
-      // console.log("testusers[i]", testUsers[i], actual.body.payload);
+      expect(actual.body.payload[0]).toEqual(expectedUsers[i]);
+      // console.log("testusers[i]", testUsers[i], actual.body.payload[0]);
+    });
+  }
+
+  for (let i = 0; i < id.length; i++) {
+    test(`params id ${id[i]} should give us response object containing properties (message, success and payload)`, async function () {
+      // specify return so doesnt speak to database
+      mockPoolQuery.mockClear();
+
+      mockPoolQuery.mockResolvedValueOnce({
+        rows: [testUsers[i]],
+      });
+
+      const expectedResponse = {
+        message: `found user with id ${id[i]}`,
+        success: true,
+        payload: [testUsers[i]],
+      };
+
+      const actual = await request(app).get(`/api/users/${id[i]}`);
+
+      expect(actual.body).toEqual(expectedResponse);
+      // console.log(actual.body);
+      // console.log(expectedResponse);
     });
   }
 });
-//   test("it should give us back an object with keys; message, success, payload", async function () {
-//     const actual = await request(app).get(`/api/users/${id}`);
-//     expect(actual.body).toEqual(
-//       expect.objectContaining({
-//         message: expect.any(String),
-//         success: expect.any(Boolean),
-//         payload: expect.any(Array),
-//       })
-//     );
-//   });
-// });
 
-// // // implementing mock for POST to /api/users
-// describe("Post /api/users", function () {
-//   // create a mock upload function for cloudinary
-//   const mockUpload = jest.spyOn(uploader, "upload");
+// POST to /api/users
 
-//   beforeEach(() => {
-//     mockUpload.mockRestore();
-//   });
+describe("POST /api/users", function () {
+  const mockPoolQuery = jest.spyOn(pool, "query");
 
-//   test("it should upload profile image to cloudinary and then be given a secure_url and public_id which values are then passed on and new user is created", async function () {
-//     let secure_url =
-//       "https://res.cloudinary.com/dzektczea/image/upload/v1646091226/fgubsl1bw8dekqo94mix.jpg";
-//     let public_id = "xnefc68tvb0wu94ewyls";
+  const mockUpload = jest.spyOn(uploader, "upload");
 
-//     mockUpload.mockResolvedValueOnce({
-//       secure_url,
-//       public_id,
-//     });
+  beforeEach(() => {
+    mockPoolQuery.mockClear();
+    mockUpload.mockClear();
+  });
 
-//     const avatar = secure_url;
-//     const cloudinary_id = public_id;
+  function mockFunctions() {
+    mockUpload.mockResolvedValueOnce({ secure_url, public_id });
 
-//     const newUser = {
-//       id: 7,
-//       first_name: "Dmitriy",
-//       last_name: "Yegorov",
-//       email: "yegorovd14@gmail.com",
-//       address: "SW",
-//       is_active: true,
-//       cloudinary_id: public_id,
-//       avatar: secure_url,
-//       user_bio: "",
-//     };
+    mockPoolQuery.mockResolvedValueOnce({ rows: newUser });
+  }
 
-//     // create a mock function for creating user
-//     const mockCreateUser = jest.fn().mockImplementation(() => newUser);
+  const secure_url =
+    "https://res.cloudinary.com/dzektczea/image/upload/v1646091226/fgubsl1bw8dekqo94mix.jpg";
+  const public_id = "xnefc68tvb0wu94ewyls";
 
-//     //  const actual = await request(app)
-//     //    .post("/api/users")
-//     //    .expect("Content-Type", /json/)
-//     //    .expect(201);
+  test("it should give us back 200 success", async function () {
+    mockFunctions();
+    // mockUpload.mockResolvedValueOnce({ secure_url, public_id });
 
-//     expect(mockCreateUser("pass user properties")).toBe(newUser);
-//     expect(mockCreateUser).toHaveBeenLastCalledWith("pass user properties");
+    // mockPoolQuery.mockResolvedValueOnce({ rows: newUser });
 
-//     //     // test("It should expect a json and a success create status code of 201")
-//     //     // .expect("Content-Type", /json/)
-//     //     // test("it should upload image successfully to cloudinary")
-//     //     // test("it should create new user")
-//     //     // test("It should respond with an object containing; message, success and payload ")
-//     mockCreateUser.mockReset();
-//   });
-// });
+    const actual = await request(app)
+      .post("/api/users")
+      .expect("Content-Type", /json/)
+      .send(newUserRequestBody);
+
+    expect(actual.statusCode).toBe(200);
+    // console.log(actual.statusCode);
+  });
+
+  test("response should give us payload with newUser object", async function () {
+    mockFunctions();
+    // mockUpload.mockResolvedValueOnce({ secure_url, public_id });
+
+    // mockPoolQuery.mockResolvedValueOnce({ rows: newUser });
+
+    const actual = await request(app)
+      .post("/api/users")
+      .expect("Content-Type", /json/)
+      .send(newUserRequestBody);
+
+    expect(actual.body.payload[0]).toEqual(expectedNewUser);
+
+    // console.log(
+    //   "actual payload[0]",
+    //   actual.body.payload[0],
+    //   "expected new user",
+    //   expectedNewUser
+    // );
+  });
+
+  test("it should give us response object containing properties (message, success, payload", async function () {
+    mockFunctions();
+
+    // mockUpload.mockResolvedValueOnce({ secure_url, public_id });
+
+    // mockPoolQuery.mockResolvedValueOnce({ rows: newUser });
+
+    const expectedResponse = {
+      message: `user created successfully`,
+      success: true,
+      payload: newUser,
+    };
+
+    const actual = await request(app).post("/api/users");
+
+    expect(actual.body).toEqual(expectedResponse);
+
+    // console.log(actual.body, expectedResponse);
+  });
+});
