@@ -219,7 +219,7 @@ export async function deleteAGiveAwayItem(id) {
 
 // delete all ITEMS registrations in an items table belongs to particular USER
 export async function deleteAllItemsOfParticularUser(id) {
-  const data = await query(`DELETE FROM items WHERE user_id=$1;`, [id]);
+  const data = await query(`DELETE FROM items WHERE user_id=$1 RETURNING *;`, [id]);
   return data.rows;
 }
 
