@@ -1,4 +1,5 @@
 export const users = [
+
   {
     first_name: "Jane",
     last_name: "Wilkins",
@@ -6,7 +7,8 @@ export const users = [
     address: "Main Street, LA22 9BU, Ambleside, United Kingdom",
     is_active: false,
     cloudinary_id: "",
-    avatar: "https://cdn.vox-cdn.com/thumbor/00awoM5IS2kFITs9546UyMSePBY=/0x0:2370x1574/1200x800/filters:focal(996x598:1374x976)/cdn.vox-cdn.com/uploads/chorus_image/image/69715362/Screen_Shot_2020_07_21_at_9.38.25_AM.0.png",
+    avatar:
+      "https://cdn.vox-cdn.com/thumbor/00awoM5IS2kFITs9546UyMSePBY=/0x0:2370x1574/1200x800/filters:focal(996x598:1374x976)/cdn.vox-cdn.com/uploads/chorus_image/image/69715362/Screen_Shot_2020_07_21_at_9.38.25_AM.0.png",
     user_bio: "hello I'm Jane, i like food",
   },
   {
@@ -16,7 +18,8 @@ export const users = [
     address: "Newlands Meadow, HP11 2BZ, High Wycombe, United Kingdom",
     is_active: true,
     cloudinary_id: "",
-    avatar: "https://cdn.vox-cdn.com/thumbor/00awoM5IS2kFITs9546UyMSePBY=/0x0:2370x1574/1200x800/filters:focal(996x598:1374x976)/cdn.vox-cdn.com/uploads/chorus_image/image/69715362/Screen_Shot_2020_07_21_at_9.38.25_AM.0.png",
+    avatar:
+      "https://cdn.vox-cdn.com/thumbor/00awoM5IS2kFITs9546UyMSePBY=/0x0:2370x1574/1200x800/filters:focal(996x598:1374x976)/cdn.vox-cdn.com/uploads/chorus_image/image/69715362/Screen_Shot_2020_07_21_at_9.38.25_AM.0.png",
     user_bio: "hello I'm Dennis, i like drink",
   },
 ];
@@ -31,7 +34,8 @@ export const items = [
     date_added: "2022-02-18",
     quantity: 5,
     cloudinary_id: "",
-    item_image: "https://upload.wikimedia.org/wikipedia/commons/f/f4/Honeycrisp.jpg",
+    item_image:
+      "https://upload.wikimedia.org/wikipedia/commons/f/f4/Honeycrisp.jpg",
     is_reserved: false,
     availablity: true,
     time_slot: "between 5pm-7pm",
@@ -45,7 +49,8 @@ export const items = [
     date_added: "2022-02-18",
     quantity: 1,
     cloudinary_id: "",
-    item_image: "https://upload.wikimedia.org/wikipedia/commons/f/f4/Honeycrisp.jpg",
+    item_image:
+      "https://upload.wikimedia.org/wikipedia/commons/f/f4/Honeycrisp.jpg",
     is_reserved: true,
     availability: false,
     time_slot: "12:00pm-2:00pm",
@@ -92,4 +97,5 @@ export const items = [
     availability: false,
     time_slot: "12:00pm-2:00pm",
   },
-];
+
+	];

@@ -25,4 +25,4 @@ const cloudinaryConfig = () =>
 	});
 export { cloudinaryConfig, uploader };
 
-console.log(cloudinaryConfig);
+// console.log(cloudinaryConfig);

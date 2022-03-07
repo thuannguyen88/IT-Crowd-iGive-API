@@ -3,7 +3,7 @@ import { db } from "../config.js";
 
 import { connectionString } from "../config.js";
 
-const pool = new pg.Pool({
+export const pool = new pg.Pool({
 	connectionString,
 	// user: db.user,
 	// host: db.host,
