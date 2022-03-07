@@ -125,25 +125,29 @@ usersRouter.delete("/:id", async (req, res) => {
   
 	const id = Number(req.params.id);
 	//also delete cloudinary id of the user we want to delete
-	// try {
-    const deleteAllItems = await deleteAllItemsOfParticularUser(id);
-    const deletedUser = await deleteUser(id);
-
-	// 	const user = await getUserById(id);
+  let deletedItems;
+  console.log(deletedItems)
+  
+  let deletedUser;
+	try {
     
-	// 	user.cloudinary_id
-	// 		? await uploader.destroy(user.cloudinary_id, (error, result) =>
-	// 				console.log(result)
-	// 		  )
-	// 		: null;
-	// } catch (error) {
-	// 	console.log("unable to delete cloudinary id", error);
-	// }
+    deletedItems = await deleteAllItemsOfParticularUser(id);
+    deletedUser = await deleteUser(id);
+		const user = await getUserById(id);
+    
+		user.cloudinary_id
+			? await uploader.destroy(user.cloudinary_id, (error, result) =>
+					console.log(result)
+			  )
+			: null;
+	} catch (error) {
+		console.log("unable to delete cloudinary id", error);
+	}
 
 	res.json({
 		message: `user successfully deleted`,
 		success: true,
-		payload: [deletedUser, deleteAllItems],
+		payload: [deletedUser, deletedItems],
 	});
 
 });
