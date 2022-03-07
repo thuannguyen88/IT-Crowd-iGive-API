@@ -7,7 +7,7 @@ import {
 	createAGiveAwayItem,
 	updateAGiveAwayItem,
 	deleteAGiveAwayItem,
-	deleteAllItemsOfParticularUser,
+	// deleteAllItemsOfParticularUser,
 	updateIsReservedStatus,
 } from "../models/users.js";
 
@@ -139,12 +139,16 @@ itemsRouter.delete("/:id", async (req, res) => {
 	});
 });
 
+
+
+
+
 // /* DELETE all items of a particular USER */
 // itemsRouter.delete("/:id", async (req, res) => {
 // 	const id = Number(req.params.id);
 // 	//also delete cloudinary id of the user we want to delete
 // 	try {
-// 		const user = await getItemById;
+// 		const user = await getItemById();
 // 		user.cloudinary_id
 // 			? await uploader.destroy(user.cloudinary_id, (error, result) =>
 // 					console.log(result)
