@@ -1,7 +1,6 @@
 import express from "express";
 // import { uploadItemImage } from "../multer/index.js";
 import {
-<<<<<<< HEAD
 	getItemById,
 	getAllItems,
 	getAllItemsParticularUser,
@@ -10,16 +9,7 @@ import {
 	deleteAGiveAwayItem,
 	// deleteAllItemsOfParticularUser,
 	updateIsReservedStatus,
-=======
-  getItemById,
-  getAllItems,
-  getAllItemsParticularUser,
-  createAGiveAwayItem,
-  updateAGiveAwayItem,
-  deleteAGiveAwayItem,
-  deleteAllItemsOfParticularUser,
-  updateIsReservedStatus,
->>>>>>> 8946dc75d42dc2e5daa2ea810dbbd1495818f168
+
 } from "../models/users.js";
 
 import { uploader } from "../config.js";
