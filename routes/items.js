@@ -132,7 +132,7 @@ itemsRouter.delete("/:id", async (req, res) => {
 	try {
 		const item = await getItemById(id);
 		console.log(item[0]);
-		item.payload.cloudinary_id
+		item[0].cloudinary_id
 			? await uploader.destroy(item[0].cloudinary_id, (error, result) =>
 					console.log(result)
 			  )
