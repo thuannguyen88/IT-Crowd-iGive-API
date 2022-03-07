@@ -128,7 +128,7 @@ usersRouter.delete("/:id", async (req, res) => {
     const deletedItems = await deleteAllItemsOfParticularUser(id);
     console.log(deletedItems);
     
-    deletedItems?.map(item => 
+    deletedItems?.map(async item => 
                     await uploader.destroy( item.cloudinary_id, ( error, result ) =>
                       console.log( result )));
     try {
