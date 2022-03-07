@@ -11,6 +11,9 @@ import {
   updateUser,
   deleteUser,
   updateIsActiveStatus,
+  deleteAllItemsOfParticularUser
+
+
 } from "../models/users.js";
 
 //create instance of usersRouter
@@ -117,27 +120,33 @@ usersRouter.post("/", async (req, res) => {
 
 /* DELETE specific user */
 usersRouter.delete("/:id", async (req, res) => {
-  const id = Number(req.params.id);
-  //also delete cloudinary id of the user we want to delete
-  try {
-    const user = await getUserById(id);
 
-    user.cloudinary_id
-      ? await uploader.destroy(user.payload.cloudinary_id, (error, result) =>
-          console.log(result)
-        )
-      : null;
-  } catch (error) {
-    console.log("unable to delete cloudinary id", error);
-  }
+    const id = Number(req.params.id);
+    //also delete cloudinary id of the user we want to delete
 
-  const deletedUser = await deleteUser(id);
+    const deletedItems = await deleteAllItemsOfParticularUser(id);
+    console.log(deletedItems);
+    
+    deletedItems?.map(async item => 
+                    await uploader.destroy( item.cloudinary_id, ( error, result ) =>
+                      console.log( result )));
+    try {
+        const user = await getUserById(id);
+        user[0].cloudinary_id
+            ? await uploader.destroy(user[0].cloudinary_id, (error, result) =>
+                    console.log(result)
+              )
+            : null;
+    } catch (error) {
+        console.log("unable to delete cloudinary id", error);
+    }
+    const deletedUser = await deleteUser(id);
+    res.json({
+        message: `user successfully deleted`,
+        success: true,
+        payload: deletedUser,
+    });
 
-  res.json({
-    message: `user successfully deleted`,
-    success: true,
-    payload: deletedUser,
-  });
 });
 
 /* UPDATE specific user */
