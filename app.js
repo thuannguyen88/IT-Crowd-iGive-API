@@ -13,9 +13,9 @@ app.use(cors());
 
 //below is the limit on file size (body-Parser) for files sent from client to server
 app.use(
-  express.json({
-    limit: "20mb",
-  })
+	express.json({
+		limit: "15mb",
+	})
 );
 app.use("/api/users", usersRouter);
 app.use("/api/items", itemsRouter);
@@ -28,18 +28,18 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res, next) => {
-  res.json("iGive api homepage");
+	res.json("iGive api homepage");
 });
 
 app.use(function (req, res, next) {
-  res
-    .status(404)
-    .json({ message: "We couldn't find what you were looking for 😞" });
+	res
+		.status(404)
+		.json({ message: "We couldn't find what you were looking for 😞" });
 });
 
 app.use(function (err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).json(err);
+	console.error(err.stack);
+	res.status(500).json(err);
 });
 
 export default app;
