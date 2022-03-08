@@ -185,6 +185,7 @@ itemsRouter.put("/:id", async (req, res) => {
   //   res.send("item details updated successfully");
 
   const item_id = Number(req.params.id);
+
   const {
     user_id,
     category,
@@ -193,11 +194,46 @@ itemsRouter.put("/:id", async (req, res) => {
     use_by_date,
     date_added,
     quantity,
-    cloudinary_id,
+	image,
     is_reserved,
     availability,
     time_slot,
   } = req.body;
+
+//   DELETING EXISTING ITEM PICTURE
+//   try {
+// 	const item = await getItemById(item_id);
+// 	console.log(item[0]);
+// 	item[0].cloudinary_id
+// 		? await uploader.destroy(item[0].cloudinary_id, (error, result) =>
+// 				console.log(result)
+// 		  )
+// 		: null;
+// } catch (error) {
+// 	console.log("unable to delete cloudinary id", error);
+// }
+
+// DOWNLOAD EDITED PICTURE
+  let result;
+
+  try {
+	  //cloudinary uploader passed image which is a base 64 encoded image
+	  result = await uploader.upload(image);
+  } catch (error) {
+	  //if this fails, let the client know
+	  console.log("upload failed", error);
+	  //bad practice to return like this but ok for development
+	  return;
+  }
+  //cloudinary returned us an object which we saved as const result
+  //we store the image url property as avatar
+  //we store the public_id of that image as unique cloudinary_id
+  const item_image = result.secure_url;
+  const cloudinary_id = result.public_id;
+  console.log("item_image:", item_image);
+  console.log("cloudinary_id:", cloudinary_id);
+
+  
 
   const updatedItem = await updateAGiveAwayItem(
     item_id,
@@ -209,6 +245,7 @@ itemsRouter.put("/:id", async (req, res) => {
     date_added,
     quantity,
     cloudinary_id,
+	item_image,
     is_reserved,
     availability,
     time_slot
@@ -220,6 +257,8 @@ itemsRouter.put("/:id", async (req, res) => {
     payload: updatedItem,
   });
 });
+
+
 
 itemsRouter.patch("/:id", async (req, res) => {
   //   res.send("item reserve status updated successfully");
