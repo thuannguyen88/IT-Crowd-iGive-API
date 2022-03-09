@@ -1,19 +1,17 @@
 export const users = [
 
   {
-    first_name: "Jane",
-    last_name: "Wilkins",
+    full_name: "Jane Wilkins",
     email: "jane.wilkins@gmail.com",
     address: "Main Street, LA22 9BU, Ambleside, United Kingdom",
-    is_active: false,
+    is_active: true,
     cloudinary_id: "",
     avatar:
       "https://cdn.vox-cdn.com/thumbor/00awoM5IS2kFITs9546UyMSePBY=/0x0:2370x1574/1200x800/filters:focal(996x598:1374x976)/cdn.vox-cdn.com/uploads/chorus_image/image/69715362/Screen_Shot_2020_07_21_at_9.38.25_AM.0.png",
     user_bio: "hello I'm Jane, i like food",
   },
   {
-    first_name: "Dennis",
-    last_name: "Thompson",
+    full_name: "Dennis Thompson",
     email: "dennis.thompson@gmail.com",
     address: "Newlands Meadow, HP11 2BZ, High Wycombe, United Kingdom",
     is_active: true,

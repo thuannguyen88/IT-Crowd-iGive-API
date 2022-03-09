@@ -187,12 +187,13 @@ export async function updateAGiveAwayItem(
   date_added,
   quantity,
   cloudinary_id,
+  item_image,
   is_reserved,
   availability,
   time_slot
 ) {
   const data = await query(
-    `UPDATE items SET userId=$2, category=$3, itemName=$4, itemDescription=$5, useByDate=$6, dateAdded=$7, quantity=$8, cloudinary_id=$9, isReserved=$10, availability=$11, timeslot=$12 WHERE itemId=$1 RETURNING *;`,
+    `UPDATE items SET user_id=$2, category=$3, item_name=$4, item_description=$5, use_by_date=$6, date_added=$7, quantity=$8, cloudinary_id=$9, item_image=$10, is_reserved=$11, availability=$12, time_slot=$13 WHERE item_id=$1 RETURNING *;`,
     [
       item_id,
       user_id,
@@ -203,6 +204,7 @@ export async function updateAGiveAwayItem(
       date_added,
       quantity,
       cloudinary_id,
+      item_image,
       is_reserved,
       availability,
       time_slot,
