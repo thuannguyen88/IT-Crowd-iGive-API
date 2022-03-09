@@ -5,14 +5,13 @@ import { uploader } from "../config.js";
 
 //import models
 import {
-  getAllUsers,
-  getUserById,
-  createUser,
-  updateUser,
-  deleteUser,
-  updateIsActiveStatus,
-  deleteAllItemsOfParticularUser
-
+	getAllUsers,
+	getUserById,
+	createUser,
+	updateUser,
+	deleteUser,
+	updateIsActiveStatus,
+	deleteAllItemsOfParticularUser,
 } from "../models/users.js";
 
 //create instance of usersRouter
@@ -26,7 +25,6 @@ const usersRouter = express.Router();
 
 /* GET all users */
 usersRouter.get("/", async (req, res) => {
-
 	// res.send("get all users");
 
 	const users = await getAllUsers();
@@ -37,7 +35,6 @@ usersRouter.get("/", async (req, res) => {
 		success: true,
 		payload: users,
 	});
-
 });
 
 /* GET specific user by ID */
@@ -80,7 +77,7 @@ usersRouter.post("/", async (req, res) => {
 
 	try {
 		//cloudinary uploader passed image which is a base 64 encoded image
-		result = await uploader.upload(image);
+		image ? (result = await uploader.upload(image)) : null;
 	} catch (error) {
 		//if this fails, let the client know
 		console.log("upload failed", error);
@@ -90,8 +87,8 @@ usersRouter.post("/", async (req, res) => {
 	//cloudinary returned us an object which we saved as const result
 	//we store the image url property as avatar
 	//we store the public_id of that image as unique cloudinary_id
-	const avatar = result.secure_url;
-	const cloudinary_id = result.public_id;
+	const avatar = result?.secure_url;
+	const cloudinary_id = result?.public_id;
 	console.log("avatar:", avatar);
 	console.log("cloudinary_id:", cloudinary_id);
 
@@ -117,36 +114,38 @@ usersRouter.post("/", async (req, res) => {
 		success: true,
 		payload: newUser,
 	});
-
 });
 
 /* DELETE specific user */
 usersRouter.delete("/:id", async (req, res) => {
-    const id = Number(req.params.id);
-    //also delete cloudinary id of the user we want to delete
+	const id = Number(req.params.id);
+	//also delete cloudinary id of the user we want to delete
 
-    const deletedItems = await deleteAllItemsOfParticularUser(id);
-    console.log(deletedItems);
-    
-    deletedItems?.map(async item => 
-                    await uploader.destroy( item.cloudinary_id, ( error, result ) =>
-                      console.log( result )));
-    try {
-        const user = await getUserById(id);
-        user[0].cloudinary_id
-            ? await uploader.destroy(user[0].cloudinary_id, (error, result) =>
-                    console.log(result)
-              )
-            : null;
-    } catch (error) {
-        console.log("unable to delete cloudinary id", error);
-    }
-    const deletedUser = await deleteUser(id);
-    res.json({
-        message: `user successfully deleted`,
-        success: true,
-        payload: deletedUser,
-    });
+	const deletedItems = await deleteAllItemsOfParticularUser(id);
+	console.log(deletedItems);
+
+	deletedItems?.map(
+		async (item) =>
+			await uploader.destroy(item.cloudinary_id, (error, result) =>
+				console.log(result)
+			)
+	);
+	try {
+		const user = await getUserById(id);
+		user[0].cloudinary_id
+			? await uploader.destroy(user[0].cloudinary_id, (error, result) =>
+					console.log(result)
+			  )
+			: null;
+	} catch (error) {
+		console.log("unable to delete cloudinary id", error);
+	}
+	const deletedUser = await deleteUser(id);
+	res.json({
+		message: `user successfully deleted`,
+		success: true,
+		payload: deletedUser,
+	});
 });
 
 /* UPDATE specific user */
