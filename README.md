@@ -1,15 +1,9 @@
-# The Back End Project Example
+### Back End for iGive
 
-Some starter code to get you up and running quickly.
+## Project details:
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/cwissy/examples_back-end-project-week)
+For our School of Code final project, we created iGive, a community focused food giving app to help reduce food waste in the local community.
 
-## Guide
+Front end hosted here: https://igive.netlify.app/
 
-[You can find the guide in this Google Doc](https://docs.google.com/document/d/1-8q034OBs1GMuMSMYuUYrpAEg37zh8qBMCOBcJoQamk/edit?usp=sharing)
-
-<!-- import * as Cloudinary from "cloudinary"; -->
-
-<!-- const { uploader } = Cloudinary.v2; -->
-
-<!-- export { uploader,cloudinaryConfig }; -->
+This repo contains the code deployed to back end via Heroku which holds the data for users and items of our app.
