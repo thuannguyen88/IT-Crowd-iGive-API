@@ -1,4 +1,7 @@
-# Back End for iGive
+![iGive_api_cover](https://user-images.githubusercontent.com/91844917/169291509-1603f8da-efaf-4d01-a273-4beb9eae9867.png)
+
+
+# iGive API
 
 ## Project details:
 
