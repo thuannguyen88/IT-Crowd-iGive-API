@@ -1,12 +1,45 @@
 ![iGive_api_cover](https://user-images.githubusercontent.com/91844917/169291509-1603f8da-efaf-4d01-a273-4beb9eae9867.png)
 
-
 # iGive API
 
-## Project details:
+This is the API built for iGive. You can visit the live site [here](https://igive.netlify.app/.)
 
-For our School of Code final project, we created iGive, a community focused food giving app to help reduce food waste in the local community.
+## Table of Contents
 
-Front end hosted here: https://igive.netlify.app/
+- [Brief Application Demo](#brief-application-demo)
+- [Project Details](#project-details)<br>
+    - [Team](#the-team)<br>
+    - [Task](#task)<br>
+    - [Understanding The Problem](#understanding-the-problem)
+    - [Ideation](#ideation)
+    - [Planning](#planning)
+    - [Tech: Tools](#tech-tools)
+    - [Features](#features)
+    - [Future Vision](#future-vision)
+    - [Reflection](#reflection)
+- [Live Site](#live-site)
 
-This repo contains the code deployed to back end via Heroku which holds the data for users and items of our app.
+## Brief Application Demo
+
+## Project Details
+
+### The Team
+
+### Task
+
+### Understanding The Problem
+
+### Ideation
+
+### Planning
+
+### Tech Tools
+
+### Features
+
+### Future Vision
+
+### Reflection
+
+## Live Site
+
